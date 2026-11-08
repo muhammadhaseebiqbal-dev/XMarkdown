@@ -32,17 +32,79 @@ npm install github:muhammadhaseebiqbal-dev/XMarkdown#v0.2.0
 ```
 
 ```jsx
+import React, { useState } from 'react';
 import { XMarkdown } from 'xmarkdown/react';
 import 'xmarkdown/styles.css';
 
-export default function Report({ source }) {
-  return <XMarkdown source={source}
-    onDiagnostics={items => console.log(items)}
-    onError={error => console.error(error.message)} />;
+export const initialSource = String.raw`# Team capacity report
+
+This is **XMarkdown inside React**: prose, a chart, math, and a live control.
+
+~~~x-chart
+{
+  "type": "bar",
+  "title": "Requests per day",
+  "description": "Monday 24; Tuesday 31; Wednesday 28.",
+  "x": "day",
+  "y": "requests",
+  "data": [
+    {"day": "Mon", "requests": 24},
+    {"day": "Tue", "requests": 31},
+    {"day": "Wed", "requests": 28}
+  ]
+}
+~~~
+
+For the queue model, stable arrival requires $\lambda < \mu$.
+
+~~~x-widget
+{
+  "type": "controls",
+  "title": "Try the arrival rate",
+  "description": "Move the slider to compare arrival with a capacity of 100.",
+  "inputs": [{"id": "rate", "label": "Requests per minute", "type": "range", "min": 0, "max": 180, "value": 80}],
+  "outputs": [{"id": "status", "label": "Queue", "expr": "rate <= 100 ? 'within capacity' : 'queue grows'"}]
+}
+~~~
+
+:::tip[Try an edit]
+Change a chart value in the editor, or move the rendered slider.
+:::
+`;
+
+export default function ReportDemo() {
+  const [source, setSource] = useState(initialSource);
+  const [diagnostics, setDiagnostics] = useState([]);
+  const [error, setError] = useState(null);
+
+  return (
+    <section className="react-quickstart">
+      <label htmlFor="report-source">Edit the XMarkdown document</label>
+      <textarea id="report-source" rows={14} value={source}
+        onChange={event => setSource(event.target.value)} />
+
+      {error && <p role="alert">{error.message}</p>}
+      {diagnostics.map((item, index) => (
+        <p role="status" key={index}>Line {item.line}: {item.message}</p>
+      ))}
+
+      <XMarkdown source={source} className="xmarkdown react-native"
+        onDiagnostics={items => { setDiagnostics(items); setError(null); }}
+        onError={cause => { setError(cause); setDiagnostics([]); }} />
+    </section>
+  );
 }
 ```
 
-Source parsing starts in an effect on the client. Optional math/XML modules are dynamically imported when source needs them. Shared widget behavior mounts automatically. Keep the `options` object stable if supplied, so normal React rerenders can reuse its parser/cache. The host controls themes; no remote CSS/assets are fetched by the document renderer. See the live React page on the showcase for larger fixtures.
+Copy the complete example into `App.jsx` in an existing React/Vite project. `initialSource` is a real XMarkdown document: the chart renders automatically, the math becomes MathML, and moving the slider changes the queue output. Editing the textarea updates the document through the native browser parser. Tilde fences are standard Markdown and avoid escaping backticks inside the JavaScript template literal; backtick fences work too. `String.raw` preserves TeX backslashes.
+
+Source parsing starts in an effect on the client. Optional math/XML modules are dynamically imported when source needs them. Shared widget behavior mounts automatically. Keep the `options` object stable if supplied, so normal React rerenders can reuse its parser/cache. The host controls themes; no remote CSS/assets are fetched by the document renderer. [Try this component and the larger fixtures live](https://xmarkdown-zeta.vercel.app/integrations/react.html).
+
+### Why the CSS import exists
+
+Import `xmarkdown/styles.css` once at your application entry, or once in this component module. It supplies shared chart, diagram, callout, table, and widget styles. These rules belong to the installed renderer; document authors do not include CSS in each XMarkdown document. This is the same kind of setup used by other styled React libraries.
+
+The renderer emits semantic HTML/SVG/MathML without the stylesheet too, but the presentation is incomplete. A host that supplies equivalent styles may omit the default file. Automatic CSS injection is not used, keeping stylesheet loading explicit for server rendering, content security policies, and host themes. The current showcase bundles the shared stylesheet at about 0.75 kB gzip; the browser parser and optional processors are much larger costs. The site theme and React demo are separate assets.
 
 ## Next.js App Router
 

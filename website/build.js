@@ -21,6 +21,8 @@ const measurements = JSON.parse(readFileSync(new URL('comparison/results.json',s
 for (const dir of ['', 'assets/', 'assets/browser/', 'examples/', 'docs/', 'downloads/']) mkdirSync(new URL(dir,output),{recursive:true});
 const save = (name,content) => writeFileSync(new URL(name,output),content);
 const assetVersion = path => createHash('sha256').update(readFileSync(new URL(path,source))).digest('hex').slice(0,12);
+const reactQuickstart = readFileSync(new URL('integration/react-quickstart.jsx',source),'utf8');
+save('downloads/react-quickstart.jsx',reactQuickstart);
 save('assets/preview.css',previewStyle);
 for (const [from,to] of [['website/style.css','assets/style.css'],['website/app.js','assets/app.js'],['src/browser/widgets.js','assets/browser/widgets.js'],['src/expressions.js','assets/expressions.js']]) copyFileSync(new URL(from,source),new URL(to,output));
 const records = cases.map(item => {
@@ -89,10 +91,11 @@ const { html, diagnostics } = parser.parse(source);</code></pre></div></section>
 const documents = [['README.md','overview','Project overview'],['docs/extended-capabilities.md','extended-capabilities','Syntax and capabilities'],['docs/parser-architecture.md','parser-architecture','Architecture and API'],['docs/ground-reality.md','ground-reality','Ground reality and prior art'],['docs/status.md','status','Status and roadmap'],['comparison/report.md','comparison','Source-token comparison'],['comparison/samples.md','samples','All source examples'],['benchmark/report.md','benchmark','Parser benchmark'],['benchmark/features-report.md','features-benchmark','Extended feature benchmark']];
 documents.push(['docs/integrations.md','integrations','Installation and framework integrations']);
 mkdirSync(new URL('integrations/',output),{recursive:true});
-save('integrations/react.html',head('Live React integration · XMarkdown','/integrations/react.html')+`<link rel="stylesheet" href="/assets/renderer/react-demo.css"><main id="main" class="docs"><div class="eyebrow">LIVE PACKAGE INTEGRATION</div><h1>Our renderer. Inside React.</h1><p>This page mounts the exported XMarkdown React component. Source is parsed in the browser by the same core used by the Node entry; math and XML adapters load on demand.</p><pre><code>import { XMarkdown } from 'xmarkdown/react';\nimport 'xmarkdown/styles.css';\n\n&lt;XMarkdown source={source} /&gt;</code></pre><div id="react-root"></div><a class="button primary" href="/docs/integrations.html">Read installation and framework guides →</a></main>${footer}<script type="module" src="/assets/renderer/react-demo.js"></script></body></html>`);
+save('integrations/react.html',head('Live React integration · XMarkdown','/integrations/react.html')+`<link rel="stylesheet" href="/assets/renderer/react-demo.css"><main id="main" class="docs"><div class="eyebrow">LIVE PACKAGE INTEGRATION</div><h1>Our renderer. Inside React.</h1><p>This page mounts the exported XMarkdown React component. Source is parsed in the browser by the same core used by the Node entry; math and XML adapters load on demand.</p><p>The example below defines source, renders chart/math/control syntax, and handles diagnostics. Edit it here, or copy the complete component into your React app.</p><p><a href="/downloads/react-quickstart.jsx" download>Download the complete React example ↓</a></p><pre><code>${escape(reactQuickstart)}</code></pre><div id="react-root"></div><a class="button primary" href="/docs/integrations.html">Read installation and framework guides →</a></main>${footer}<script type="module" src="/assets/renderer/react-demo.js"></script></body></html>`);
 for (const [path,slug,label] of documents) {
   // Repository-relative links remain authoritative on GitHub when rendered here.
-  const result = parser.parse(readFileSync(new URL(path,source),'utf8'));
+  const markdown = readFileSync(new URL(path,source),'utf8').replace(/^<\/?details>\s*$/gm,'').replace(/<summary><strong>(.*?)<\/strong><\/summary>/g,'**$1**');
+  const result = parser.parse(markdown);
   let html = result.html.replace(/href="(?!https?:|mailto:|#|\/)([^"]+)"/g,(_,url)=>`href="${repository}/blob/main/${new URL(url,new URL(path,'https://example.local/')).pathname.slice(1)}"`);
   save(`docs/${slug}.html`,head(`${label} · XMarkdown`,`/docs/${slug}.html`)+`<main id="main" class="docs"><div class="eyebrow">XMARKDOWN / DOCUMENTATION</div><article>${html}</article><a class="button primary" href="${repository}/blob/main/${path}">View original on GitHub ↗</a></main>${footer}</body></html>`);
 }

@@ -1,0 +1,85 @@
+{
+  "name": "xmarkdown",
+  "version": "0.2.0",
+  "private": false,
+  "type": "module",
+  "description": "Markdown for rich AI documents: declarative charts, diagrams, math, widgets, validated SVG, and bounded streaming previews.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/muhammadhaseebiqbal-dev/XMarkdown.git"
+  },
+  "bugs": {
+    "url": "https://github.com/muhammadhaseebiqbal-dev/XMarkdown/issues"
+  },
+  "keywords": [
+    "markdown",
+    "ai",
+    "parser",
+    "svg",
+    "diagrams",
+    "charts",
+    "streaming"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./browser": {
+      "types": "./src/browser/parser.d.ts",
+      "default": "./src/browser/parser.js"
+    },
+    "./widgets": {
+      "types": "./src/browser/widgets.d.ts",
+      "default": "./src/browser/widgets.js"
+    },
+    "./frame":{"types":"./src/browser/frame.d.ts","default":"./src/browser/frame.js"},
+    "./react": {
+      "types": "./src/react.d.ts",
+      "default": "./src/react.js"
+    },
+    "./styles.css": "./src/styles.css"
+  },
+  "files": [
+    "src/",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "test": "node --test",
+    "bench": "node benchmark/run.js",
+    "bench:features": "node benchmark/features.js",
+    "compare": "node comparison/build.js",
+    "demo": "node demo/server.js",
+    "build": "node website/build.js",
+    "site": "node website/server.js",
+    "check:site": "node website/check.js",
+    "check:types": "tsc --noEmit --strict --module NodeNext --moduleResolution NodeNext --target ES2022 integration/types-smoke.ts"
+  },
+  "dependencies": {
+    "katex": "0.19.1",
+    "markdown-it": "14.3.3",
+    "saxes": "6.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "esbuild": "0.28.2",
+    "js-tiktoken": "1.0.21",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "typescript": "7.0.2"
+  }
+}

@@ -1,0 +1,673 @@
+{
+  "date": "2026-11-08T11:52:54.591Z",
+  "tokenizers": "js-tiktoken 1.0.21; o200k_base and cl100k_base",
+  "scope": "Representation counts, not an LLM generation experiment. Named local encodings are not current Claude token counts. LF line endings. No editor, server, parser, or shared runtime code in author-fragment counts.",
+  "guide": {
+    "codeUnits": 1724,
+    "utf8Bytes": 1724,
+    "lines": 9,
+    "tokens": {
+      "o200k_base": 383,
+      "cl100k_base": 383
+    }
+  },
+  "sharedHtmlRuntime": {
+    "codeUnits": 10209,
+    "utf8Bytes": 10217,
+    "lines": 178,
+    "tokens": {
+      "o200k_base": 3024,
+      "cl100k_base": 2996
+    }
+  },
+  "records": [
+    {
+      "id": "01-prose",
+      "title": "Headings, emphasis, and lists",
+      "level": "Easy",
+      "supported": true,
+      "xMetrics": {
+        "codeUnits": 88,
+        "utf8Bytes": 88,
+        "lines": 7,
+        "tokens": {
+          "o200k_base": 20,
+          "cl100k_base": 20
+        }
+      },
+      "variants": {
+        "literal": {
+          "codeUnits": 138,
+          "utf8Bytes": 138,
+          "lines": 7,
+          "tokens": {
+            "o200k_base": 42,
+            "cl100k_base": 42
+          }
+        },
+        "compact": {
+          "codeUnits": 138,
+          "utf8Bytes": 138,
+          "lines": 7,
+          "tokens": {
+            "o200k_base": 42,
+            "cl100k_base": 42
+          }
+        },
+        "standalone": {
+          "codeUnits": 1560,
+          "utf8Bytes": 1560,
+          "lines": 18,
+          "tokens": {
+            "o200k_base": 516,
+            "cl100k_base": 513
+          }
+        },
+        "shared": {
+          "codeUnits": 138,
+          "utf8Bytes": 138,
+          "lines": 7,
+          "tokens": {
+            "o200k_base": 42,
+            "cl100k_base": 42
+          }
+        }
+      },
+      "assessment": "Markdown is concise and familiar. On long plain prose the relative savings shrink because most tokens are the same words."
+    },
+    {
+      "id": "02-table",
+      "title": "A comparison table",
+      "level": "Easy",
+      "supported": true,
+      "xMetrics": {
+        "codeUnits": 98,
+        "utf8Bytes": 98,
+        "lines": 5,
+        "tokens": {
+          "o200k_base": 23,
+          "cl100k_base": 24
+        }
+      },
+      "variants": {
+        "literal": {
+          "codeUnits": 208,
+          "utf8Bytes": 208,
+          "lines": 19,
+          "tokens": {
+            "o200k_base": 68,
+            "cl100k_base": 68
+          }
+        },
+        "compact": {
+          "codeUnits": 208,
+          "utf8Bytes": 208,
+          "lines": 19,
+          "tokens": {
+            "o200k_base": 68,
+            "cl100k_base": 68
+          }
+        },
+        "standalone": {
+          "codeUnits": 1619,
+          "utf8Bytes": 1619,
+          "lines": 30,
+          "tokens": {
+            "o200k_base": 537,
+            "cl100k_base": 534
+          }
+        },
+        "shared": {
+          "codeUnits": 208,
+          "utf8Bytes": 208,
+          "lines": 19,
+          "tokens": {
+            "o200k_base": 68,
+            "cl100k_base": 68
+          }
+        }
+      },
+      "assessment": "Markdown usually saves table markup. HTML supports features this table syntax does not: row/column spans, custom cell layouts, and interactive controls."
+    },
+    {
+      "id": "03-callout",
+      "title": "A callout",
+      "level": "Easy",
+      "supported": true,
+      "xMetrics": {
+        "codeUnits": 83,
+        "utf8Bytes": 83,
+        "lines": 4,
+        "tokens": {
+          "o200k_base": 19,
+          "cl100k_base": 21
+        }
+      },
+      "variants": {
+        "literal": {
+          "codeUnits": 180,
+          "utf8Bytes": 180,
+          "lines": 4,
+          "tokens": {
+            "o200k_base": 47,
+            "cl100k_base": 47
+          }
+        },
+        "compact": {
+          "codeUnits": 180,
+          "utf8Bytes": 180,
+          "lines": 4,
+          "tokens": {
+            "o200k_base": 47,
+            "cl100k_base": 47
+          }
+        },
+        "standalone": {
+          "codeUnits": 1582,
+          "utf8Bytes": 1582,
+          "lines": 15,
+          "tokens": {
+            "o200k_base": 515,
+            "cl100k_base": 512
+          }
+        },
+        "shared": {
+          "codeUnits": 180,
+          "utf8Bytes": 180,
+          "lines": 4,
+          "tokens": {
+            "o200k_base": 47,
+            "cl100k_base": 47
+          }
+        }
+      },
+      "assessment": "The directive is compact when a host supplies the appearance. A shared HTML callout component can be similarly compact."
+    },
+    {
+      "id": "04-chart",
+      "title": "A chart with axes and labels",
+      "level": "Complex",
+      "supported": true,
+      "xMetrics": {
+        "codeUnits": 269,
+        "utf8Bytes": 269,
+        "lines": 4,
+        "tokens": {
+          "o200k_base": 79,
+          "cl100k_base": 78
+        }
+      },
+      "variants": {
+        "literal": {
+          "codeUnits": 1828,
+          "utf8Bytes": 1828,
+          "lines": 2,
+          "tokens": {
+            "o200k_base": 675,
+            "cl100k_base": 666
+          }
+        },
+        "compact": {
+          "codeUnits": 1710,
+          "utf8Bytes": 1710,
+          "lines": 2,
+          "tokens": {
+            "o200k_base": 635,
+            "cl100k_base": 626
+          }
+        },
+        "standalone": {
+          "codeUnits": 3131,
+          "utf8Bytes": 3131,
+          "lines": 13,
+          "tokens": {
+            "o200k_base": 1106,
+            "cl100k_base": 1094
+          }
+        },
+        "shared": {
+          "codeUnits": 318,
+          "utf8Bytes": 318,
+          "lines": 2,
+          "tokens": {
+            "o200k_base": 88,
+            "cl100k_base": 87
+          }
+        }
+      },
+      "assessment": "The data specification avoids coordinates, axis construction, and repeated SVG tags. The advantage becomes much smaller if HTML uses a shared chart component."
+    },
+    {
+      "id": "05-diagram",
+      "title": "An automatically placed pipeline",
+      "level": "Complex",
+      "supported": true,
+      "xMetrics": {
+        "codeUnits": 338,
+        "utf8Bytes": 338,
+        "lines": 4,
+        "tokens": {
+          "o200k_base": 79,
+          "cl100k_base": 76
+        }
+      },
+      "variants": {
+        "literal": {
+          "codeUnits": 1419,
+          "utf8Bytes": 1419,
+          "lines": 2,
+          "tokens": {
+            "o200k_base": 494,
+            "cl100k_base": 483
+          }
+        },
+        "compact": {
+          "codeUnits": 1419,
+          "utf8Bytes": 1419,
+          "lines": 2,
+          "tokens": {
+            "o200k_base": 494,
+            "cl100k_base": 483
+          }
+        },
+        "standalone": {
+          "codeUnits": 2844,
+          "utf8Bytes": 2844,
+          "lines": 13,
+          "tokens": {
+            "o200k_base": 963,
+            "cl100k_base": 949
+          }
+        },
+        "shared": {
+          "codeUnits": 387,
+          "utf8Bytes": 387,
+          "lines": 2,
+          "tokens": {
+            "o200k_base": 88,
+            "cl100k_base": 85
+          }
+        }
+      },
+      "assessment": "XMarkdown states relationships. HTML/SVG permits manual placement, custom shapes, and edge styling. Those controls are absent from this profile."
+    },
+    {
+      "id": "06-dependencies",
+      "title": "A branching dependency graph",
+      "level": "Difficult",
+      "supported": true,
+      "xMetrics": {
+        "codeUnits": 590,
+        "utf8Bytes": 590,
+        "lines": 4,
+        "tokens": {
+          "o200k_base": 128,
+          "cl100k_base": 122
+        }
+      },
+      "variants": {
+        "literal": {
+          "codeUnits": 2201,
+          "utf8Bytes": 2201,
+          "lines": 2,
+          "tokens": {
+            "o200k_base": 743,
+            "cl100k_base": 727
+          }
+        },
+        "compact": {
+          "codeUnits": 2158,
+          "utf8Bytes": 2158,
+          "lines": 2,
+          "tokens": {
+            "o200k_base": 727,
+            "cl100k_base": 711
+          }
+        },
+        "standalone": {
+          "codeUnits": 3579,
+          "utf8Bytes": 3579,
+          "lines": 13,
+          "tokens": {
+            "o200k_base": 1196,
+            "cl100k_base": 1177
+          }
+        },
+        "shared": {
+          "codeUnits": 639,
+          "utf8Bytes": 639,
+          "lines": 2,
+          "tokens": {
+            "o200k_base": 137,
+            "cl100k_base": 131
+          }
+        }
+      },
+      "assessment": "The graph fits the current schema. Layout is basic and may contain crossings; exact routing, edge labels, and decision shapes favor custom HTML/SVG."
+    },
+    {
+      "id": "07-exact-demo",
+      "title": "The exact playground document",
+      "level": "Difficult",
+      "supported": true,
+      "xMetrics": {
+        "codeUnits": 839,
+        "utf8Bytes": 839,
+        "lines": 16,
+        "tokens": {
+          "o200k_base": 208,
+          "cl100k_base": 205
+        }
+      },
+      "variants": {
+        "literal": {
+          "codeUnits": 3610,
+          "utf8Bytes": 3610,
+          "lines": 8,
+          "tokens": {
+            "o200k_base": 1259,
+            "cl100k_base": 1239
+          }
+        },
+        "compact": {
+          "codeUnits": 3492,
+          "utf8Bytes": 3492,
+          "lines": 8,
+          "tokens": {
+            "o200k_base": 1219,
+            "cl100k_base": 1199
+          }
+        },
+        "standalone": {
+          "codeUnits": 4914,
+          "utf8Bytes": 4914,
+          "lines": 19,
+          "tokens": {
+            "o200k_base": 1689,
+            "cl100k_base": 1666
+          }
+        },
+        "shared": {
+          "codeUnits": 1044,
+          "utf8Bytes": 1044,
+          "lines": 8,
+          "tokens": {
+            "o200k_base": 261,
+            "cl100k_base": 257
+          }
+        }
+      },
+      "assessment": "This is the same 839-code-unit source used by the live playground. It combines prose, a callout, a four-node diagram, and a four-value chart."
+    },
+    {
+      "id": "08-math",
+      "title": "Rendered mathematical notation",
+      "level": "Complex",
+      "supported": true,
+      "xMetrics": {
+        "codeUnits": 38,
+        "utf8Bytes": 40,
+        "lines": 4,
+        "tokens": {
+          "o200k_base": 14,
+          "cl100k_base": 13
+        }
+      },
+      "variants": {
+        "literal": {
+          "codeUnits": 185,
+          "utf8Bytes": 187,
+          "lines": 1,
+          "tokens": {
+            "o200k_base": 75,
+            "cl100k_base": 70
+          }
+        },
+        "compact": {
+          "codeUnits": 185,
+          "utf8Bytes": 187,
+          "lines": 1,
+          "tokens": {
+            "o200k_base": 75,
+            "cl100k_base": 70
+          }
+        },
+        "standalone": {
+          "codeUnits": 1608,
+          "utf8Bytes": 1610,
+          "lines": 12,
+          "tokens": {
+            "o200k_base": 544,
+            "cl100k_base": 537
+          }
+        },
+        "shared": {
+          "codeUnits": 285,
+          "utf8Bytes": 287,
+          "lines": 3,
+          "tokens": {
+            "o200k_base": 106,
+            "cl100k_base": 101
+          }
+        }
+      },
+      "assessment": "Dollar-delimited math now compiles to native MathML through lazy-loaded KaTeX. The literal HTML example uses a hand-written equivalent equation; the XMarkdown renderer also retains the TeX source for accessibility and inspection."
+    },
+    {
+      "id": "09-interaction",
+      "title": "A live queue what-if control",
+      "level": "Complex",
+      "supported": true,
+      "xMetrics": {
+        "codeUnits": 411,
+        "utf8Bytes": 411,
+        "lines": 4,
+        "tokens": {
+          "o200k_base": 112,
+          "cl100k_base": 110
+        }
+      },
+      "variants": {
+        "literal": {
+          "codeUnits": 523,
+          "utf8Bytes": 523,
+          "lines": 14,
+          "tokens": {
+            "o200k_base": 148,
+            "cl100k_base": 139
+          }
+        },
+        "compact": {
+          "codeUnits": 523,
+          "utf8Bytes": 523,
+          "lines": 14,
+          "tokens": {
+            "o200k_base": 148,
+            "cl100k_base": 139
+          }
+        },
+        "standalone": {
+          "codeUnits": 1944,
+          "utf8Bytes": 1944,
+          "lines": 25,
+          "tokens": {
+            "o200k_base": 619,
+            "cl100k_base": 607
+          }
+        },
+        "shared": {
+          "codeUnits": 1742,
+          "utf8Bytes": 1742,
+          "lines": 2,
+          "tokens": {
+            "o200k_base": 546,
+            "cl100k_base": 550
+          }
+        }
+      },
+      "assessment": "Both versions calculate the same queue status. XMarkdown uses a shared control runtime and a bounded expression interpreter. The HTML example supplies its own JavaScript. The XMarkdown author fragment can be larger for a tiny custom control; shared behavior is not counted as per-document code."
+    },
+    {
+      "id": "10-canvas",
+      "title": "A drawing application",
+      "level": "Complex",
+      "supported": true,
+      "xMetrics": {
+        "codeUnits": 188,
+        "utf8Bytes": 188,
+        "lines": 4,
+        "tokens": {
+          "o200k_base": 52,
+          "cl100k_base": 52
+        }
+      },
+      "variants": {
+        "literal": {
+          "codeUnits": 1226,
+          "utf8Bytes": 1226,
+          "lines": 25,
+          "tokens": {
+            "o200k_base": 317,
+            "cl100k_base": 290
+          }
+        },
+        "compact": {
+          "codeUnits": 1226,
+          "utf8Bytes": 1226,
+          "lines": 25,
+          "tokens": {
+            "o200k_base": 317,
+            "cl100k_base": 290
+          }
+        },
+        "standalone": {
+          "codeUnits": 2640,
+          "utf8Bytes": 2640,
+          "lines": 36,
+          "tokens": {
+            "o200k_base": 785,
+            "cl100k_base": 755
+          }
+        },
+        "shared": {
+          "codeUnits": 899,
+          "utf8Bytes": 899,
+          "lines": 2,
+          "tokens": {
+            "o200k_base": 252,
+            "cl100k_base": 248
+          }
+        }
+      },
+      "assessment": "XMarkdown now supports a drawing widget with undo and clear through a shared SVG runtime. The HTML example uses canvas and clear. These offer the same basic drawing task, with an extra undo action in XMarkdown; they do not have identical pixels or event implementations."
+    },
+    {
+      "id": "11-scene",
+      "title": "A complex vector scene",
+      "level": "Difficult",
+      "supported": true,
+      "xMetrics": {
+        "codeUnits": 2355,
+        "utf8Bytes": 2355,
+        "lines": 4,
+        "tokens": {
+          "o200k_base": 844,
+          "cl100k_base": 836
+        }
+      },
+      "variants": {
+        "literal": {
+          "codeUnits": 2871,
+          "utf8Bytes": 2871,
+          "lines": 2,
+          "tokens": {
+            "o200k_base": 978,
+            "cl100k_base": 971
+          }
+        },
+        "compact": {
+          "codeUnits": 2871,
+          "utf8Bytes": 2871,
+          "lines": 2,
+          "tokens": {
+            "o200k_base": 978,
+            "cl100k_base": 971
+          }
+        },
+        "standalone": {
+          "codeUnits": 4286,
+          "utf8Bytes": 4286,
+          "lines": 13,
+          "tokens": {
+            "o200k_base": 1447,
+            "cl100k_base": 1437
+          }
+        },
+        "shared": {
+          "codeUnits": 2871,
+          "utf8Bytes": 2871,
+          "lines": 2,
+          "tokens": {
+            "o200k_base": 978,
+            "cl100k_base": 971
+          }
+        }
+      },
+      "assessment": "Paths, groups, gradients, clipping, masks, markers, and reusable symbols are supported through validated scene tuples. Shared-component HTML currently uses the rendered SVG for this case; the JSON template adapter is limited to charts and diagrams."
+    },
+    {
+      "id": "12-import",
+      "title": "An existing SVG import",
+      "level": "Difficult",
+      "supported": true,
+      "xMetrics": {
+        "codeUnits": 651,
+        "utf8Bytes": 651,
+        "lines": 7,
+        "tokens": {
+          "o200k_base": 225,
+          "cl100k_base": 221
+        }
+      },
+      "variants": {
+        "literal": {
+          "codeUnits": 637,
+          "utf8Bytes": 637,
+          "lines": 4,
+          "tokens": {
+            "o200k_base": 219,
+            "cl100k_base": 215
+          }
+        },
+        "compact": {
+          "codeUnits": 637,
+          "utf8Bytes": 637,
+          "lines": 4,
+          "tokens": {
+            "o200k_base": 219,
+            "cl100k_base": 215
+          }
+        },
+        "standalone": {
+          "codeUnits": 2052,
+          "utf8Bytes": 2052,
+          "lines": 15,
+          "tokens": {
+            "o200k_base": 687,
+            "cl100k_base": 680
+          }
+        },
+        "shared": {
+          "codeUnits": 1130,
+          "utf8Bytes": 1130,
+          "lines": 2,
+          "tokens": {
+            "o200k_base": 368,
+            "cl100k_base": 368
+          }
+        }
+      },
+      "assessment": "Existing SVG markup is checked and converted into the same scene representation. Raw SVG adds fence overhead rather than saving syntax tokens. Scripts, external resources, animation, CSS stylesheets, and foreignObject are outside the import profile."
+    }
+  ]
+}

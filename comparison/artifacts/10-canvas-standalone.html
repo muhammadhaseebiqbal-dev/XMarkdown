@@ -1,0 +1,35 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A drawing application</title><style>body{font:16px/1.65 system-ui,sans-serif;color:#172b45;margin:0 auto;padding:24px;max-width:850px}h1,h2{line-height:1.2}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f1f5f9;padding:16px}a{color:#2563eb}code{font-size:.9em}table{border-collapse:collapse}td,th{border:1px solid #cbd5e1;padding:8px}
+.x-graphic{margin:1.5rem 0;padding:1rem;border:1px solid #d5dfeb;border-radius:12px;background:#fff}
+.x-graphic figcaption{font-weight:650;margin-bottom:.75rem}.x-graphic svg{width:100%;height:auto;display:block}
+.x-graphic:not(.x-scene):not(.x-drawing) svg text{font-family:system-ui,sans-serif;font-size:12px;fill:#334155}
+.x-grid{stroke:#e2e8f0;stroke-width:1;fill:none}.x-axis{stroke:#64748b;fill:none}
+.x-bar,.x-arrow{fill:#2563eb}.x-line{fill:none;stroke:#2563eb;stroke-width:3}
+.x-edge{stroke:#64748b;stroke-width:2;fill:none}.x-node{fill:#eff6ff;stroke:#93c5fd}
+.x-description{font-size:.9rem;color:#475569}.x-callout{padding:1rem;border-left:4px solid #2563eb;background:#eff6ff;margin:1rem 0}
+.x-callout-warning{border-color:#b45309;background:#fffbeb}.x-callout-title{display:block;margin-bottom:.5rem}
+.x-error{border-left:4px solid #b91c1c;padding:1rem}.x-image-alt{font-style:italic}
+</style></head><body><h1>Sketch a diagram</h1>
+<p>Drag inside the canvas to draw. This example stays in the browser.</p>
+<canvas id="drawing" width="640" height="320" aria-label="Freehand drawing area"></canvas>
+<button id="clear">Clear drawing</button>
+<style>canvas{display:block;max-width:100%;border:1px solid #94a3b8;touch-action:none}button{margin-top:12px}</style>
+<script>
+const canvas = document.getElementById('drawing');
+const ctx = canvas.getContext('2d');
+ctx.lineWidth = 3; ctx.strokeStyle = '#2563eb';
+let drawing = false;
+function point(event) {
+  const r = canvas.getBoundingClientRect();
+  return [(event.clientX-r.left)*canvas.width/r.width, (event.clientY-r.top)*canvas.height/r.height];
+}
+canvas.addEventListener('pointerdown', event => {
+  drawing = true; canvas.setPointerCapture(event.pointerId);
+  ctx.beginPath(); ctx.moveTo(...point(event));
+});
+canvas.addEventListener('pointermove', event => {
+  if (drawing) { ctx.lineTo(...point(event)); ctx.stroke(); }
+});
+canvas.addEventListener('pointerup', () => { drawing = false; });
+canvas.addEventListener('pointercancel', () => { drawing = false; });
+document.getElementById('clear').addEventListener('click', () => ctx.clearRect(0,0,canvas.width,canvas.height));
+</script></body></html>

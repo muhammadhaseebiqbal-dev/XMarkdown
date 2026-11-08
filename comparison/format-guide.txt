@@ -1,0 +1,8 @@
+Produce XMarkdown source, not HTML. Use ordinary Markdown for prose, lists, tables, and code.
+Callouts: :::note[Title], :::tip[Title], or :::warning[Title], Markdown content, then ::: on a new line.
+Charts: a closed x-chart code fence containing JSON with type (bar or line), title, description, x and y field names, and data (objects containing a string x field and a numeric y field). Maximum 256 rows. Numbers must be finite within +/-1e12.
+Diagrams: a closed x-diagram code fence containing JSON with title, description, optional direction (LR or TD), nodes (unique id and label), and edges (pairs of existing node IDs). Maximum 32 nodes and 128 edges. IDs start with a letter and contain letters, digits, underscores, or hyphens.
+Math: $inline TeX$, $$ on separate lines for display TeX, or a closed x-math fence. Equations are bounded and compiled with trust disabled.
+Widgets: x-widget JSON, type controls with title, description, inputs and outputs; or type draw with title, description and optional width, height, color and lineWidth. Controls use range/number/select/toggle inputs and outputs with expr strings; expressions may use earlier outputs, arithmetic, comparisons, conditionals, min/max/abs/round/floor/ceil/clamp. No programs or property access.
+SVG: x-svg JSON with title, description, viewBox and children tuples [tag, attributes, ...children], or supported raw SVG markup. Local references only. Paths, groups, gradients, clips, masks, markers, patterns, symbols and reuse are supported. Scripts, external assets, foreignObject, animation and filters are rejected.
+Labels are plain text. Do not emit author programs, imports, or unsupported fields. Mermaid is retained as source rather than rendered.

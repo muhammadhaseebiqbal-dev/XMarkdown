@@ -1,0 +1,12 @@
+
+.x-graphic{margin:1.5rem 0;padding:1rem;border:1px solid #d5dfeb;border-radius:12px;background:#fff}
+.x-graphic figcaption{font-weight:650;margin-bottom:.75rem}.x-graphic svg{width:100%;height:auto;display:block}
+.x-graphic:not(.x-scene):not(.x-drawing) svg text{font-family:system-ui,sans-serif;font-size:12px;fill:#334155}
+.x-grid{stroke:#e2e8f0;stroke-width:1;fill:none}.x-axis{stroke:#64748b;fill:none}
+.x-bar,.x-arrow{fill:#2563eb}.x-line{fill:none;stroke:#2563eb;stroke-width:3}
+.x-edge{stroke:#64748b;stroke-width:2;fill:none}.x-node{fill:#eff6ff;stroke:#93c5fd}
+.x-description{font-size:.9rem;color:#475569}.x-callout{padding:1rem;border-left:4px solid #2563eb;background:#eff6ff;margin:1rem 0}
+.x-callout-warning{border-color:#b45309;background:#fffbeb}.x-callout-title{display:block;margin-bottom:.5rem}
+.x-error{border-left:4px solid #b91c1c;padding:1rem}.x-image-alt{font-style:italic}
+.x-controls h3{margin:0}.x-inputs{display:flex;flex-wrap:wrap;gap:1rem;margin:1rem 0}.x-inputs label{display:flex;flex-direction:column;gap:.35rem;min-width:160px}.x-inputs input,.x-inputs select,.x-draw-actions button{font:inherit}.x-outputs output{font-weight:650}.x-drawing svg{border:1px solid #cbd5e1;touch-action:none;background:white;cursor:crosshair}.x-draw-actions{display:flex;gap:.5rem;align-items:center;margin-top:.75rem}.x-draw-actions button{padding:.4rem .7rem;border:1px solid #94a3b8;border-radius:4px;background:#f8fafc;cursor:pointer}.x-draw-actions [role=status]{margin-left:auto;color:#475569}
+.xmarkdown{font:16px/1.65 system-ui,sans-serif}.xmarkdown table{border-collapse:collapse}.xmarkdown td,.xmarkdown th{padding:8px;border:1px solid #cbd5e1}.xmarkdown pre{white-space:pre-wrap;overflow-wrap:anywhere}.xmarkdown input,.xmarkdown button,.xmarkdown select{font:inherit}

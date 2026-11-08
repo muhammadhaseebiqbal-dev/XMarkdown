@@ -1,0 +1,264 @@
+{
+  "date": "2026-11-08T12:19:21.836Z",
+  "node": "v22.22.0",
+  "platform": "win32",
+  "arch": "x64",
+  "chunkSize": 64,
+  "baseline": "markdown-it 14.3.3",
+  "methodology": "Reused parser instances and bounded extension cache; hydrated tokens, no HTML rendering; 60 interleaved batch warmups, two streaming warmups, seven timed trials with rotating condition order; median per operation. Streaming compares full-prefix parsing on every chunk with provisional section patches plus one full final parse. Repeated graphic specifications can hit the cache in all XMarkdown conditions. Graphics baseline has unequal features; only the same-XMarkdown stream comparison is used there. See features-report.md for cold and cached rendering costs.",
+  "results": [
+    {
+      "name": "short prose",
+      "codeUnits": 510,
+      "utf8Bytes": 510,
+      "chunks": 8,
+      "markdownIt": {
+        "medianMs": 0.033027722772277286,
+        "minMs": 0.024284653465346622,
+        "maxMs": 0.12047920792079213,
+        "iterations": 202,
+        "trials": 7
+      },
+      "xmarkdown": {
+        "medianMs": 0.0519337962962962,
+        "minMs": 0.02856620370370369,
+        "maxMs": 0.09549398148148135,
+        "iterations": 216,
+        "trials": 7
+      },
+      "naiveStream": {
+        "medianMs": 0.13301268656716442,
+        "minMs": 0.10580820895522415,
+        "maxMs": 0.3034179104477613,
+        "iterations": 134,
+        "trials": 7
+      },
+      "incrementalStream": {
+        "medianMs": 0.0878089743589739,
+        "minMs": 0.06548397435897449,
+        "maxMs": 0.1270826923076924,
+        "iterations": 156,
+        "trials": 7
+      },
+      "baselineStream": {
+        "medianMs": 0.12561167883211677,
+        "minMs": 0.10120000000000033,
+        "maxMs": 0.16509051094890534,
+        "iterations": 137,
+        "trials": 7
+      },
+      "batchSpeedup": 0.6359581838355374,
+      "streamingSpeedup": 1.5147960392225077,
+      "baselineStreamingSpeedup": 1.4305107165766537,
+      "stats": {
+        "previewParses": 4,
+        "previewCodeUnits": 854,
+        "finalCodeUnits": 510,
+        "deferredPreviews": 0,
+        "totalCodeUnits": 510,
+        "submittedCodeUnits": 1364
+      }
+    },
+    {
+      "name": "long prose",
+      "codeUnits": 27751,
+      "utf8Bytes": 27751,
+      "chunks": 434,
+      "markdownIt": {
+        "medianMs": 1.0278115384615358,
+        "minMs": 0.9923192307692261,
+        "maxMs": 1.255546153846152,
+        "iterations": 26,
+        "trials": 7
+      },
+      "xmarkdown": {
+        "medianMs": 1.2608514285714332,
+        "minMs": 1.0740542857142827,
+        "maxMs": 1.549977142857142,
+        "iterations": 35,
+        "trials": 7
+      },
+      "naiveStream": {
+        "medianMs": 306.6193999999996,
+        "minMs": 263.6761999999999,
+        "maxMs": 327.6082000000001,
+        "iterations": 1,
+        "trials": 7
+      },
+      "incrementalStream": {
+        "medianMs": 4.099530000000049,
+        "minMs": 3.7278500000000347,
+        "maxMs": 5.724579999999969,
+        "iterations": 10,
+        "trials": 7
+      },
+      "baselineStream": {
+        "medianMs": 263.1831000000002,
+        "minMs": 238.79910000000018,
+        "maxMs": 313.5619999999999,
+        "iterations": 1,
+        "trials": 7
+      },
+      "batchSpeedup": 0.8151726009670024,
+      "streamingSpeedup": 74.79379343485617,
+      "baselineStreamingSpeedup": 64.19835932411692,
+      "stats": {
+        "previewParses": 240,
+        "previewCodeUnits": 55336,
+        "finalCodeUnits": 27751,
+        "deferredPreviews": 0,
+        "totalCodeUnits": 27751,
+        "submittedCodeUnits": 83087
+      }
+    },
+    {
+      "name": "code and tables",
+      "codeUnits": 12900,
+      "utf8Bytes": 12900,
+      "chunks": 202,
+      "markdownIt": {
+        "medianMs": 0.5637140624999972,
+        "minMs": 0.5233328125000014,
+        "maxMs": 0.6181140624999983,
+        "iterations": 64,
+        "trials": 7
+      },
+      "xmarkdown": {
+        "medianMs": 0.6659870967741881,
+        "minMs": 0.5884967741935432,
+        "maxMs": 0.6952903225806333,
+        "iterations": 62,
+        "trials": 7
+      },
+      "naiveStream": {
+        "medianMs": 62.58969999999863,
+        "minMs": 57.660499999999956,
+        "maxMs": 98.15480000000025,
+        "iterations": 1,
+        "trials": 7
+      },
+      "incrementalStream": {
+        "medianMs": 2.7340916666665485,
+        "minMs": 2.1468583333332085,
+        "maxMs": 3.507608333333337,
+        "iterations": 12,
+        "trials": 7
+      },
+      "baselineStream": {
+        "medianMs": 61.76900000000023,
+        "minMs": 52.35750000000007,
+        "maxMs": 112.12879999999859,
+        "iterations": 1,
+        "trials": 7
+      },
+      "batchSpeedup": 0.8464339102520662,
+      "streamingSpeedup": 22.892319508917222,
+      "baselineStreamingSpeedup": 22.59214669101057,
+      "stats": {
+        "previewParses": 200,
+        "previewCodeUnits": 24134,
+        "finalCodeUnits": 12900,
+        "deferredPreviews": 0,
+        "totalCodeUnits": 12900,
+        "submittedCodeUnits": 37034
+      }
+    },
+    {
+      "name": "long list",
+      "codeUnits": 16000,
+      "utf8Bytes": 16000,
+      "chunks": 250,
+      "markdownIt": {
+        "medianMs": 1.3022642857143052,
+        "minMs": 1.051592857142818,
+        "maxMs": 1.7121785714285969,
+        "iterations": 28,
+        "trials": 7
+      },
+      "xmarkdown": {
+        "medianMs": 1.3615874999999846,
+        "minMs": 1.1800999999999817,
+        "maxMs": 1.8840718750000178,
+        "iterations": 32,
+        "trials": 7
+      },
+      "naiveStream": {
+        "medianMs": 152.1355999999996,
+        "minMs": 149.04759999999987,
+        "maxMs": 223.66780000000108,
+        "iterations": 1,
+        "trials": 7
+      },
+      "incrementalStream": {
+        "medianMs": 5.219311111111084,
+        "minMs": 4.1203444444444255,
+        "maxMs": 6.572111111111048,
+        "iterations": 9,
+        "trials": 7
+      },
+      "baselineStream": {
+        "medianMs": 146.6870999999992,
+        "minMs": 136.39600000000064,
+        "maxMs": 181.92429999999877,
+        "iterations": 1,
+        "trials": 7
+      },
+      "batchSpeedup": 0.9564308468712587,
+      "streamingSpeedup": 29.14859772894685,
+      "baselineStreamingSpeedup": 28.10468601646023,
+      "stats": {
+        "previewParses": 16,
+        "previewCodeUnits": 38400,
+        "finalCodeUnits": 16000,
+        "deferredPreviews": 484,
+        "totalCodeUnits": 16000,
+        "submittedCodeUnits": 54400
+      }
+    },
+    {
+      "name": "graphics report",
+      "codeUnits": 17750,
+      "utf8Bytes": 17750,
+      "chunks": 278,
+      "markdownIt": {
+        "medianMs": 0.45498478260869096,
+        "minMs": 0.40423152173913046,
+        "maxMs": 0.5419293478260877,
+        "iterations": 92,
+        "trials": 7
+      },
+      "xmarkdown": {
+        "medianMs": 0.5593552631579003,
+        "minMs": 0.4667684210526204,
+        "maxMs": 0.6293618421052662,
+        "iterations": 76,
+        "trials": 7
+      },
+      "naiveStream": {
+        "medianMs": 71.98179999999957,
+        "minMs": 70.54879999999866,
+        "maxMs": 88.10789999999906,
+        "iterations": 1,
+        "trials": 7
+      },
+      "incrementalStream": {
+        "medianMs": 1.724018181818048,
+        "minMs": 1.6576272727272061,
+        "maxMs": 2.179972727272715,
+        "iterations": 11,
+        "trials": 7
+      },
+      "batchSpeedup": 0.8134093170769958,
+      "streamingSpeedup": 41.75234389006953,
+      "stats": {
+        "previewParses": 150,
+        "previewCodeUnits": 26549,
+        "finalCodeUnits": 17750,
+        "deferredPreviews": 0,
+        "totalCodeUnits": 17750,
+        "submittedCodeUnits": 44299
+      }
+    }
+  ],
+  "checksum": 17375432
+}

@@ -1,0 +1,257 @@
+{
+  "date": "2026-11-08T12:12:48.877Z",
+  "runtime": "v22.22.0",
+  "platform": "win32",
+  "method": "Seven timed trials with rotating condition order; 12 interleaved batch warmups, two streaming warmups, and 60 plain-baseline warmups. Median per document. Cold means a cleared extension cache, with dependencies already loaded after first use. Cached means the same completed source is repeated. Streaming includes provisional HTML/SVG rendering and the final full render; each workflow starts with an empty cache. Browser layout, painting, networking, and model generation are excluded. First-use rows are single observations in fixture order, not isolated process startup trials. Run this benchmark separately from other benchmark processes.",
+  "plain": {
+    "markdown": {
+      "medianMs": 0.2594550000000004,
+      "minMs": 0.23749299999999948,
+      "maxMs": 0.27322400000000013
+    },
+    "xmarkdown": {
+      "medianMs": 0.26759500000000114,
+      "minMs": 0.2479819999999995,
+      "maxMs": 0.32762299999999867
+    },
+    "ratio": 0.9695808965040426
+  },
+  "widgetRuntime": {
+    "bytes": 7752,
+    "gzipBytes": 3152
+  },
+  "results": [
+    {
+      "name": "Plain prose",
+      "sourceCodeUnits": 6320,
+      "outputCodeUnits": 8320,
+      "firstUseMs": 8.424399999999991,
+      "uncached": {
+        "medianMs": 0.28717666666666636,
+        "minMs": 0.2459099999999997,
+        "maxMs": 0.5662966666666667
+      },
+      "cacheOff": {
+        "medianMs": 0.290870000000001,
+        "minMs": 0.2554300000000012,
+        "maxMs": 0.4186899999999999
+      },
+      "cached": {
+        "medianMs": 0.2731800000000002,
+        "minMs": 0.24249333333333425,
+        "maxMs": 0.4015833333333338
+      },
+      "repeated": {
+        "medianMs": 12.950966666666659,
+        "minMs": 11.896133333333333,
+        "maxMs": 14.239633333333359
+      },
+      "streamed": {
+        "medianMs": 1.4078000000000277,
+        "minMs": 1.0199333333333318,
+        "maxMs": 1.7022666666666737
+      },
+      "cacheSpeedup": 1.0512360592527497,
+      "streamSpeedup": 9.199436472983665
+    },
+    {
+      "name": "Math",
+      "sourceCodeUnits": 45,
+      "outputCodeUnits": 631,
+      "firstUseMs": 26.475199999999973,
+      "uncached": {
+        "medianMs": 0.07917666666666795,
+        "minMs": 0.06527999999999944,
+        "maxMs": 0.14601666666666613
+      },
+      "cacheOff": {
+        "medianMs": 0.07375333333333174,
+        "minMs": 0.0500566666666676,
+        "maxMs": 0.13482999999999948
+      },
+      "cached": {
+        "medianMs": 0.0071966666666677765,
+        "minMs": 0.005943333333334522,
+        "maxMs": 0.009596666666667867
+      },
+      "repeated": {
+        "medianMs": 0.06229999999997441,
+        "minMs": 0.056566666666678124,
+        "maxMs": 0.12216666666665787
+      },
+      "streamed": {
+        "medianMs": 0.07946666666665199,
+        "minMs": 0.07510000000002037,
+        "maxMs": 0.25499999999999545
+      },
+      "cacheSpeedup": 11.001852709586254,
+      "streamSpeedup": 0.7839765100669369
+    },
+    {
+      "name": "Controls",
+      "sourceCodeUnits": 502,
+      "outputCodeUnits": 1999,
+      "firstUseMs": 2.110900000000015,
+      "uncached": {
+        "medianMs": 0.05214333333333343,
+        "minMs": 0.05160666666666505,
+        "maxMs": 0.07305666666666563
+      },
+      "cacheOff": {
+        "medianMs": 0.035990000000000084,
+        "minMs": 0.033466666666667304,
+        "maxMs": 0.04630333333333283
+      },
+      "cached": {
+        "medianMs": 0.012673333333331508,
+        "minMs": 0.011836666666666436,
+        "maxMs": 0.015316666666664484
+      },
+      "repeated": {
+        "medianMs": 0.17980000000000018,
+        "minMs": 0.16693333333334218,
+        "maxMs": 0.24049999999999727
+      },
+      "streamed": {
+        "medianMs": 0.07026666666668764,
+        "minMs": 0.0667999999999817,
+        "maxMs": 0.1081333333333608
+      },
+      "cacheSpeedup": 4.114413466597128,
+      "streamSpeedup": 2.5588235294110033
+    },
+    {
+      "name": "Drawing",
+      "sourceCodeUnits": 188,
+      "outputCodeUnits": 899,
+      "firstUseMs": 0.1230000000000473,
+      "uncached": {
+        "medianMs": 0.014473333333334419,
+        "minMs": 0.014133333333332606,
+        "maxMs": 0.01766333333333326
+      },
+      "cacheOff": {
+        "medianMs": 0.009406666666666296,
+        "minMs": 0.009276666666664823,
+        "maxMs": 0.010050000000001091
+      },
+      "cached": {
+        "medianMs": 0.0063333333333313625,
+        "minMs": 0.0062433333333350065,
+        "maxMs": 0.006446666666666563
+      },
+      "repeated": {
+        "medianMs": 0.04433333333334607,
+        "minMs": 0.04336666666669468,
+        "maxMs": 0.04646666666667443
+      },
+      "streamed": {
+        "medianMs": 0.025899999999978718,
+        "minMs": 0.025400000000028438,
+        "maxMs": 0.03633333333330787
+      },
+      "cacheSpeedup": 2.2852631578956193,
+      "streamSpeedup": 1.71171171171361
+    },
+    {
+      "name": "Vector scene",
+      "sourceCodeUnits": 2355,
+      "outputCodeUnits": 2871,
+      "firstUseMs": 3.5720000000000027,
+      "uncached": {
+        "medianMs": 0.19377666666666377,
+        "minMs": 0.18033333333333226,
+        "maxMs": 0.3684666666666658
+      },
+      "cacheOff": {
+        "medianMs": 0.1370366666666655,
+        "minMs": 0.12918000000000043,
+        "maxMs": 0.25598333333333584
+      },
+      "cached": {
+        "medianMs": 0.03316999999999932,
+        "minMs": 0.029966666666666697,
+        "maxMs": 0.05292333333333469
+      },
+      "repeated": {
+        "medianMs": 1.6701666666666597,
+        "minMs": 1.5880333333333283,
+        "maxMs": 1.9169333333333423
+      },
+      "streamed": {
+        "medianMs": 0.23499999999997576,
+        "minMs": 0.22013333333332716,
+        "maxMs": 0.8308333333333545
+      },
+      "cacheSpeedup": 5.841925434629718,
+      "streamSpeedup": 7.107092198582264
+    },
+    {
+      "name": "SVG import",
+      "sourceCodeUnits": 651,
+      "outputCodeUnits": 1130,
+      "firstUseMs": 9.709100000000035,
+      "uncached": {
+        "medianMs": 0.1501200000000002,
+        "minMs": 0.12246333333333344,
+        "maxMs": 0.24487666666666427
+      },
+      "cacheOff": {
+        "medianMs": 0.11946999999999737,
+        "minMs": 0.10300000000000485,
+        "maxMs": 0.1564266666666678
+      },
+      "cached": {
+        "medianMs": 0.011779999999998837,
+        "minMs": 0.011053333333332678,
+        "maxMs": 0.020613333333335503
+      },
+      "repeated": {
+        "medianMs": 0.6310333333333347,
+        "minMs": 0.3233666666666674,
+        "maxMs": 1.1871333333333496
+      },
+      "streamed": {
+        "medianMs": 0.32416666666669397,
+        "minMs": 0.15313333333331988,
+        "maxMs": 0.42780000000000956
+      },
+      "cacheSpeedup": 12.743633276741512,
+      "streamSpeedup": 1.9466323907453413
+    },
+    {
+      "name": "Extended document",
+      "sourceCodeUnits": 3959,
+      "outputCodeUnits": 7781,
+      "firstUseMs": 2.69419999999991,
+      "uncached": {
+        "medianMs": 0.651576666666665,
+        "minMs": 0.621613333333327,
+        "maxMs": 0.7494466666666691
+      },
+      "cacheOff": {
+        "medianMs": 0.5083666666666659,
+        "minMs": 0.47492333333332987,
+        "maxMs": 0.6218433333333299
+      },
+      "cached": {
+        "medianMs": 0.07509999999999764,
+        "minMs": 0.061620000000001104,
+        "maxMs": 0.17129333333333155
+      },
+      "repeated": {
+        "medianMs": 4.7591333333333905,
+        "minMs": 3.9913333333333108,
+        "maxMs": 5.242366666666612
+      },
+      "streamed": {
+        "medianMs": 0.86850000000004,
+        "minMs": 0.7537333333333057,
+        "maxMs": 1.0754999999999957
+      },
+      "cacheSpeedup": 8.676120727918581,
+      "streamSpeedup": 5.479715985415281
+    }
+  ],
+  "checksum": 48707331
+}

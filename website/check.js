@@ -11,6 +11,17 @@ for(const match of html.matchAll(/(?:href|src)="(\/(?!#)[^"?#]+)[^"]*"/g)){
 }
 assert.ok(html.includes('sandbox="allow-scripts"'));
 assert.ok(!html.includes('allow-same-origin'));
+for (const path of ['examples/10-canvas.html','examples/13-capacity.html','examples/preview.html']) {
+  const preview = readFileSync(new URL(path,root),'utf8');
+  assert.match(preview,/<script nonce="[^"]+" type="module">/);
+  assert.doesNotMatch(preview,/<script[^>]+src=/);
+}
+const previewShell=readFileSync(new URL('examples/preview.html',root),'utf8');
+assert.ok(previewShell.includes('x-preview-document'));
+assert.ok(previewShell.includes('xmarkdown:rendered'));
+const client=readFileSync(new URL('assets/app.js',root),'utf8');
+assert.ok(client.includes("preview.src = '/examples/preview.html'"));
+assert.ok(!client.includes('.srcdoc='));
 assert.ok(existsSync(new URL('assets/renderer/parser.js',root)));
 assert.ok(existsSync(new URL('integrations/react.html',root)));
 assert.ok(existsSync(new URL('assets/renderer/react-demo.css',root)));

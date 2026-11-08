@@ -1,8 +1,40 @@
 const $ = id => document.getElementById(id);
-import { createDocumentFrame } from '/assets/frame.js';
 let nativeParser;
 let records = [], current, mode = 'x', controller;
+let dynamicPreviewReady = false;
 const status = (message,error=false) => { $('render-status').textContent=message; $('render-status').classList.toggle('error',error); };
+function showPreview(result, signal) {
+  const preview = $('preview'), id = crypto.randomUUID();
+  return new Promise((resolve,reject) => {
+    const cleanup = () => {
+      clearTimeout(timeout);
+      window.removeEventListener('message',receive);
+      preview.removeEventListener('load',send);
+      signal.removeEventListener('abort',abort);
+    };
+    const receive = event => {
+      if (event.source !== preview.contentWindow || event.origin !== 'null' || event.data?.id !== id) return;
+      if (event.data.type === 'xmarkdown:rendered') {
+        dynamicPreviewReady = true; cleanup(); resolve();
+      } else if (event.data.type === 'xmarkdown:error') {
+        cleanup(); reject(new Error('The preview could not initialize its widgets.'));
+      }
+    };
+    // An opaque sandbox requires '*'; the destination is this specific iframe.
+    const send = () => preview.contentWindow.postMessage({type:'xmarkdown:render',id,html:result.html,modules:result.assets.modules},'*');
+    const abort = () => {cleanup(); reject(new DOMException('Preview cancelled.','AbortError'));};
+    const timeout = setTimeout(() => {cleanup(); reject(new Error('The preview did not finish loading. Please try rendering again.'));},10000);
+    window.addEventListener('message',receive);
+    signal.addEventListener('abort',abort,{once:true});
+    if (signal.aborted) return abort();
+    if (dynamicPreviewReady) send();
+    else {
+      preview.addEventListener('load',send,{once:true});
+      preview.removeAttribute('srcdoc');
+      preview.src = '/examples/preview.html';
+    }
+  });
+}
 function metrics() {
   const m = mode === 'x' ? current.metrics?.xMetrics : current.metrics?.variants.compact;
   $('source-metrics').textContent = m ? `${m.tokens.o200k_base.toLocaleString()} tokens · ${m.utf8Bytes.toLocaleString()} bytes · o200k_base · original fixture` : 'Additional control example · token counts not measured';
@@ -17,6 +49,7 @@ function setMode(value) {
 }
 function select(id) {
   controller?.abort();
+  dynamicPreviewReady = false;
   $('render-source').disabled=false;
   current=records.find(r=>r.id===id);
   if(!current) return;
@@ -59,8 +92,8 @@ try {
       nativeParser??=createParser({maxInputCodeUnits:32768,maxOutputCodeUnits:524288,maxTokens:8192});
       const result=await nativeParser.parse(source);
       if(request.signal.aborted)return;
-      const nonce=btoa(String.fromCharCode(...crypto.getRandomValues(new Uint8Array(18))));
-      $('preview').srcdoc=createDocumentFrame(result,{nonce});
+      await showPreview(result,request.signal);
+      if(request.signal.aborted)return;
       status(result.diagnostics.length?result.diagnostics.map(d=>`Line ${d.line}: ${d.message}`).join(' · '):'Rendered locally by native XMarkdown. No diagnostics.',result.diagnostics.length>0);
     } catch(error) {if(error.name!=='AbortError')status(error.message,true);}
     finally {if(controller===request)$('render-source').disabled=false;}

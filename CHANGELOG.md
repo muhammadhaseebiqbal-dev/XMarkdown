@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Fixed showcase drawing/controls in sandboxed previews by bundling the shared widget runtime into interactive examples. Edited documents use an isolated preview shell with checked parent messages and completion acknowledgement.
+
 Worker distribution, conformance/fuzzing, and model/reader evaluations remain planned.
 
 ## 0.2.1 — 2026-11-08

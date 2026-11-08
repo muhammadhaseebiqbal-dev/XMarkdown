@@ -21,6 +21,9 @@ const measurements = JSON.parse(readFileSync(new URL('comparison/results.json',s
 for (const dir of ['', 'assets/', 'assets/browser/', 'examples/', 'docs/', 'downloads/']) mkdirSync(new URL(dir,output),{recursive:true});
 const save = (name,content) => writeFileSync(new URL(name,output),content);
 const assetVersion = path => createHash('sha256').update(readFileSync(new URL(path,source))).digest('hex').slice(0,12);
+const previewBundle = await build({entryPoints:[fileURLToPath(new URL('./preview-runtime.js',import.meta.url))],platform:'browser',bundle:true,format:'iife',minify:true,target:['es2022'],write:false});
+const previewRuntime = previewBundle.outputFiles[0].text;
+save('examples/preview.html',frame({html:'<div id="x-preview-document"></div>',assets:{modules:['widgets']}},randomBytes(18).toString('base64'),previewRuntime));
 const reactQuickstart = readFileSync(new URL('integration/react-quickstart.jsx',source),'utf8');
 save('downloads/react-quickstart.jsx',reactQuickstart);
 save('assets/preview.css',previewStyle);
@@ -30,7 +33,7 @@ const records = cases.map(item => {
   if (result.diagnostics.length) throw new Error(`${item.id}: example contains diagnostics`);
   const metrics = measurements.records.find(r=>r.id===item.id);
   if (metrics.xMetrics.utf8Bytes !== Buffer.byteLength(item.x)) throw new Error('Stale example metrics; run npm run compare');
-  save(`examples/${item.id}.html`,frame(result,randomBytes(18).toString('base64')));
+  save(`examples/${item.id}.html`,frame(result,randomBytes(18).toString('base64'),previewRuntime));
   save(`downloads/${item.id}.md`,item.x);
   const html=(item.html||result.html).replace(/\b(x|y|width|height|viewBox|points|d|transform)="([^"]*)"/g,(_,name,value)=>`${name}="${value.replace(/[-+]?(?:\d*\.\d+|\d+)(?:e[-+]?\d+)?/gi,n=>String(Number(Number(n).toFixed(3))))}"`);
   return {...item,html,metrics};
@@ -40,13 +43,13 @@ records.push({id:'13-capacity',title:'Arrival rate and service capacity',level:'
 const capacity = parser.parse(records.at(-1).x,{idPrefix:'capacity'});
 records.at(-1).html=capacity.html;
 records.at(-1).metrics={xMetrics:measure(records.at(-1).x),variants:{compact:measure(capacity.html)}};
-save('examples/13-capacity.html',frame(capacity,randomBytes(18).toString('base64')));
+save('examples/13-capacity.html',frame(capacity,randomBytes(18).toString('base64'),previewRuntime));
 save('downloads/13-capacity.md',records.at(-1).x);
 for(const item of showcaseCases){
   const result=parser.parse(item.x,{idPrefix:item.id});
   if(result.diagnostics.length)throw new Error(`${item.id}: ${JSON.stringify(result.diagnostics)}`);
   records.unshift({...item,html:result.html,metrics:{xMetrics:measure(item.x),variants:{compact:measure(result.html)}}});
-  save(`examples/${item.id}.html`,frame(result,randomBytes(18).toString('base64')));
+  save(`examples/${item.id}.html`,frame(result,randomBytes(18).toString('base64'),previewRuntime));
   save(`downloads/${item.id}.md`,item.x);
 }
 const defaultCase=records.find(r=>r.id==='14-architecture');

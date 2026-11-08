@@ -1,5 +1,5 @@
 import { mkdirSync, readFileSync, writeFileSync, copyFileSync } from 'node:fs';
-import { randomBytes } from 'node:crypto';
+import { createHash, randomBytes } from 'node:crypto';
 import { build } from 'esbuild';
 import { getEncoding } from 'js-tiktoken';
 import { gzipSync } from 'node:zlib';
@@ -20,6 +20,7 @@ const measure=source=>({utf8Bytes:Buffer.byteLength(source),tokens:{o200k_base:e
 const measurements = JSON.parse(readFileSync(new URL('comparison/results.json',source),'utf8'));
 for (const dir of ['', 'assets/', 'assets/browser/', 'examples/', 'docs/', 'downloads/']) mkdirSync(new URL(dir,output),{recursive:true});
 const save = (name,content) => writeFileSync(new URL(name,output),content);
+const assetVersion = path => createHash('sha256').update(readFileSync(new URL(path,source))).digest('hex').slice(0,12);
 save('assets/preview.css',previewStyle);
 for (const [from,to] of [['website/style.css','assets/style.css'],['website/app.js','assets/app.js'],['src/browser/widgets.js','assets/browser/widgets.js'],['src/expressions.js','assets/expressions.js']]) copyFileSync(new URL(from,source),new URL(to,output));
 const records = cases.map(item => {
@@ -55,7 +56,7 @@ save('assets/bundle-report.json',JSON.stringify(bundleReport,null,2));
 
 const nav = `<a class="skip" href="#main">Skip to content</a><header class="topbar"><a class="brand" href="/" aria-label="XMarkdown home"><span class="brand-icon">X<span>↓</span></span>XMarkdown<span class="version">0.2</span></a><nav aria-label="Main navigation"><a href="/#examples">Examples</a><a href="/#evidence">Evidence</a><a href="/docs/extended-capabilities.html">Docs</a></nav><a class="github-link" href="${repository}">GitHub <span aria-hidden="true">↗</span></a></header>`;
 const footer = `<footer><a class="brand" href="/">XMarkdown</a><p>Familiar syntax. A little more possibility.</p><a href="${repository}">Source code ↗</a><a href="${repository}/blob/main/LICENSE">MIT license</a><span>MVP · November 2026</span></footer>`;
-const head = (pageTitle,canonical) => `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101315"><title>${escape(pageTitle)}</title><meta name="description" content="${escape(description)}"><meta property="og:title" content="${escape(pageTitle)}"><meta property="og:description" content="${escape(description)}"><meta property="og:type" content="website"><meta property="og:image" content="${site}/assets/social.svg"><link rel="canonical" href="${site}${canonical}"><link rel="icon" href="/assets/icon.svg" type="image/svg+xml"><link rel="stylesheet" href="/assets/style.css"></head><body>${nav}`;
+const head = (pageTitle,canonical) => `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101315"><title>${escape(pageTitle)}</title><meta name="description" content="${escape(description)}"><meta property="og:title" content="${escape(pageTitle)}"><meta property="og:description" content="${escape(description)}"><meta property="og:type" content="website"><meta property="og:image" content="${site}/assets/social.svg"><link rel="canonical" href="${site}${canonical}"><link rel="icon" href="/assets/icon.svg" type="image/svg+xml"><link rel="stylesheet" href="/assets/style.css?v=${assetVersion('website/style.css')}"></head><body>${nav}`;
 save('assets/icon.svg','<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#d8ee91"/><path d="M16 18L40 46M40 18L16 46M49 18V43M43 37L49 44L55 37" fill="none" stroke="#172018" stroke-width="5"/></svg>');
 save('assets/social.svg','<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630"><rect width="1200" height="630" fill="#101315"/><circle cx="1080" cy="140" r="330" fill="#202b20"/><text x="80" y="110" fill="#d8ee91" font-family="sans-serif" font-size="32">XMarkdown / MVP 0.2</text><text x="80" y="280" fill="#efefe7" font-family="sans-serif" font-size="85" font-weight="bold">Markdown.</text><text x="80" y="380" fill="#d8ee91" font-family="sans-serif" font-size="85" font-weight="bold">With more to say.</text><text x="80" y="510" fill="#a5afb0" font-family="sans-serif" font-size="28">Charts · Diagrams · Math · Widgets · SVG</text></svg>');
 
@@ -83,7 +84,7 @@ npm run build
 npm run site</code></pre><div class="mini-label">PARSER API</div><pre><code>import { createParser } from './src/index.js';
 
 const parser = createParser();
-const { html, diagnostics } = parser.parse(source);</code></pre></div></section></main>${footer}<script type="module" src="/assets/app.js"></script></body></html>`);
+const { html, diagnostics } = parser.parse(source);</code></pre></div></section></main>${footer}<script type="module" src="/assets/app.js?v=${assetVersion('website/app.js')}"></script></body></html>`);
 
 const documents = [['README.md','overview','Project overview'],['docs/extended-capabilities.md','extended-capabilities','Syntax and capabilities'],['docs/parser-architecture.md','parser-architecture','Architecture and API'],['docs/ground-reality.md','ground-reality','Ground reality and prior art'],['docs/status.md','status','Status and roadmap'],['comparison/report.md','comparison','Source-token comparison'],['comparison/samples.md','samples','All source examples'],['benchmark/report.md','benchmark','Parser benchmark'],['benchmark/features-report.md','features-benchmark','Extended feature benchmark']];
 documents.push(['docs/integrations.md','integrations','Installation and framework integrations']);

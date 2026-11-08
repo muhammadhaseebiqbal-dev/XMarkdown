@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-d8ee91)](LICENSE)
 [![Stage: MVP](https://img.shields.io/badge/stage-MVP%200.2.0-d8ee91)](CHANGELOG.md)
 
-[**Live showcase & playground →**](https://xmarkdown.vercel.app) · [Syntax reference](docs/extended-capabilities.md) · [Architecture](docs/parser-architecture.md) · [All examples](comparison/samples.md) · [Roadmap](docs/status.md)
+[**Live showcase & playground →**](https://xmarkdown-zeta.vercel.app) · [Syntax reference](docs/extended-capabilities.md) · [Architecture](docs/parser-architecture.md) · [All examples](comparison/samples.md) · [Roadmap](docs/status.md)
 
 XMarkdown lets an author describe content and visual meaning while a shared renderer supplies layout, geometry, styles, and supported interactions. HTML, SVG, and MathML remain rendering targets. The Markdown core is **markdown-it**, with custom extensions; this repository does not introduce a replacement CommonMark parser.
 
@@ -15,7 +15,7 @@ XMarkdown lets an author describe content and visual meaning while a shared rend
 ## Install
 
 ```sh
-npm install github:muhammadhaseebiqbal-dev/XMarkdown
+npm install github:muhammadhaseebiqbal-dev/XMarkdown#v0.2.0
 ```
 
 ```jsx
@@ -29,7 +29,7 @@ import 'xmarkdown/styles.css';
 
 ## Try it
 
-Explore [the dark showcase](https://xmarkdown.vercel.app): eighteen rendered examples, including layered architecture, capacity planning, rollback workflows, advanced equations, and a combined report, XMarkdown/HTML source views, token measurements, downloadable sources, a two-input control, and an editable playground using the native browser renderer.
+Explore [the dark showcase](https://xmarkdown-zeta.vercel.app): eighteen rendered examples, including layered architecture, capacity planning, rollback workflows, advanced equations, and a combined report, XMarkdown/HTML source views, token measurements, downloadable sources, a two-input control, and an editable playground using the native browser renderer.
 
 ```sh
 git clone https://github.com/muhammadhaseebiqbal-dev/XMarkdown.git
@@ -88,7 +88,7 @@ These processors are reused as dependencies; they were not rewritten or claimed 
 | Efficiency | Optional adapters/runtime; bounded cache; streamed sections | [Feature measurements](benchmark/features-report.md) | Worker package; real AI trials |
 | Source comparison | Twelve measured X/HTML examples, two tokenizers | [Report](comparison/report.md), [JSON](comparison/results.json) | Capability-matched model evaluations |
 | Validation | Input budgets, checked SVG/expressions/links; escaped fallback | [Tests](test), [security policy](SECURITY.md) | Fuzzing, independent review, isolation |
-| Developer experience | Local demos, hosted editor, downloadable snippets, docs | [Showcase](https://xmarkdown.vercel.app), [examples](examples) | npm registry release and framework app coverage |
+| Developer experience | Local demos, hosted editor, downloadable snippets, docs | [Showcase](https://xmarkdown-zeta.vercel.app), [examples](examples) | npm registry release and framework app coverage |
 | Maintenance | CI, policies, templates, changelog | [.github](.github), [CONTRIBUTING](CONTRIBUTING.md) | Maintainer review and release cadence |
 
 ## Examples: easy to difficult

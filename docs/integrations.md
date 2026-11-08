@@ -7,10 +7,10 @@ The showcase uses **our native renderer**. Its static fixtures are built by `cre
 The source package is ready to install from GitHub. It has not been published to the npm registry; do not assume `npm install xmarkdown` resolves this project.
 
 ```sh
-npm install github:muhammadhaseebiqbal-dev/XMarkdown
+npm install github:muhammadhaseebiqbal-dev/XMarkdown#v0.2.0
 ```
 
-For reproducible production use, pin a verified release tag or commit, for example `github:muhammadhaseebiqbal-dev/XMarkdown#v0.2.0` once that tag exists. A repository clone can also produce a distributable archive with `npm pack`; install the resulting `.tgz`. Package files include source, declarations, shared CSS, license, README, and changelog, with no showcase/dev dependencies in the runtime payload.
+The installation command pins the MVP release tag. Pin a commit hash when you need an immutable source revision. A repository clone can also produce a distributable archive with `npm pack`; install the resulting `.tgz`. Package files include source, declarations, shared CSS, license, README, and changelog, with no showcase/dev dependencies in the runtime payload.
 
 Node.js 22+ is supported. Core dependencies are installed automatically. React is an optional peer: non-React consumers do not need it. TypeScript declarations are included.
 
@@ -28,7 +28,7 @@ Node.js 22+ is supported. Core dependencies are installed automatically. React i
 ## React and Vite
 
 ```sh
-npm install github:muhammadhaseebiqbal-dev/XMarkdown
+npm install github:muhammadhaseebiqbal-dev/XMarkdown#v0.2.0
 ```
 
 ```jsx

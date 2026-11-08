@@ -24,6 +24,7 @@ function select(id) {
   $('source-editor').value=current.x; $('html-source').textContent=current.html||'Inspect the complete control markup after rendering XMarkdown.';
   $('example-assessment').textContent=current.assessment;
   $('download-source').href=`/downloads/${id}.md`;
+  $('full-example').href=`/examples/${id}.html`;
   $('preview').removeAttribute('srcdoc'); $('preview').src=`/examples/${id}.html`;
   document.querySelectorAll('[data-example]').forEach(b=>{b.classList.toggle('selected',b.dataset.example===id);b.setAttribute('aria-pressed',String(b.dataset.example===id));});
   setMode('x'); status('Examples are pre-rendered. Edited documents use native XMarkdown locally in the browser.');

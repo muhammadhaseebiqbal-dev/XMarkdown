@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createParser} from 'xmarkdown';
-import {createParser as createBrowserParser} from 'xmarkdown/browser';
-import {XMarkdown} from 'xmarkdown/react';
+import {createParser} from 'xmarkdown-renderer';
+import {createParser as createBrowserParser} from 'xmarkdown-renderer/browser';
+import {XMarkdown} from 'xmarkdown-renderer/react';
 import {createElement} from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 import {showcaseCases} from '../examples/showcase.js';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { XMarkdown } from 'xmarkdown/react';
-import 'xmarkdown/styles.css';
+import { XMarkdown } from 'xmarkdown-renderer/react';
+import 'xmarkdown-renderer/styles.css';
 
 export const initialSource = String.raw`# Team capacity report
 

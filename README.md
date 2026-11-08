@@ -1,188 +1,103 @@
 # XMarkdown
 
-**Markdown for reports that need charts, math, controls, and SVG.** Write familiar prose and structured visual data; use one shared renderer in Node, the browser, or React.
+**Markdown for reports that need charts, diagrams, math, controls, and SVG.**
 
 [![CI](https://github.com/muhammadhaseebiqbal-dev/XMarkdown/actions/workflows/ci.yml/badge.svg)](https://github.com/muhammadhaseebiqbal-dev/XMarkdown/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/license-MIT-d8ee91)](LICENSE)
-[![Stage: MVP](https://img.shields.io/badge/stage-MVP%200.2.0-d8ee91)](CHANGELOG.md)
+[![MIT license](https://img.shields.io/badge/license-MIT-d8ee91)](https://github.com/muhammadhaseebiqbal-dev/XMarkdown/blob/main/LICENSE)
+[![MVP 0.2.1](https://img.shields.io/badge/MVP-0.2.1-d8ee91)](https://github.com/muhammadhaseebiqbal-dev/XMarkdown/blob/main/CHANGELOG.md)
 
-[**Live showcase & playground →**](https://xmarkdown-zeta.vercel.app) · [Syntax reference](docs/extended-capabilities.md) · [Architecture](docs/parser-architecture.md) · [All examples](comparison/samples.md) · [Roadmap](docs/status.md)
+[**Try the playground →**](https://xmarkdown-zeta.vercel.app) · [Examples](https://xmarkdown-zeta.vercel.app/#examples) · [Syntax guide](https://github.com/muhammadhaseebiqbal-dev/XMarkdown/blob/main/docs/extended-capabilities.md) · [React demo](https://xmarkdown-zeta.vercel.app/integrations/react.html)
 
-XMarkdown lets an author describe content and visual meaning while a shared renderer supplies layout, geometry, styles, and supported interactions. HTML, SVG, and MathML remain rendering targets. The Markdown core is **markdown-it**, with custom extensions; this repository does not introduce a replacement CommonMark parser.
+Write familiar Markdown, describe a visual with data, and let the renderer draw it. The same engine runs in Node, the browser, and React. The showcase uses this engine too.
 
-Use it for generated reports, technical explanations, and documents with supported interactive graphics. For plain prose, standard Markdown is simpler. Existing Markdown plugin stacks may already meet your needs; XMarkdown's value is one consistent document profile and renderer. [Compare the tradeoffs](docs/ground-reality.md).
-
-**Release status:** First public integration MVP, version 0.2.0. The synchronous Node API runs on Node.js 22+. The async browser entry and React component share its native core. The package is **installable from GitHub**, with TypeScript declarations, but is **not published to npm**. APIs and schemas may change before 1.0. See [compatibility policy](docs/compatibility.md).
+Use XMarkdown for generated reports, technical explanations, and documents with interactive visuals. For a document that only needs prose, regular Markdown is simpler. This is an experimental MVP; APIs and syntax may change before 1.0.
 
 ## Install
 
 ```sh
-npm install github:muhammadhaseebiqbal-dev/XMarkdown#v0.2.0
+npm install xmarkdown-renderer
 ```
 
-Copy this complete example into `App.jsx` in an existing React project. It includes a chart, math, an interactive slider, editable source, and diagnostic handling. [Try the same component live](https://xmarkdown-zeta.vercel.app/integrations/react.html).
+Requires Node.js 22+. React integration supports React 18+. Dependencies and TypeScript declarations are included.
 
-<details>
-<summary><strong>Complete React example with real XMarkdown source</strong></summary>
+The npm package is named **`xmarkdown-renderer`**. The name `xmarkdown` belongs to a different publisher.
+
+## Use it in React
+
+Import the component and shared styles once, then pass a document as `source`:
 
 ```jsx
-import React, { useState } from 'react';
-import { XMarkdown } from 'xmarkdown/react';
-import 'xmarkdown/styles.css';
+import { XMarkdown } from 'xmarkdown-renderer/react';
+import 'xmarkdown-renderer/styles.css';
 
-export const initialSource = String.raw`# Team capacity report
+const report = String.raw`# Team report
 
-This is **XMarkdown inside React**: prose, a chart, math, and a live control.
+Requests increased this week. **Here is the breakdown.**
 
 ~~~x-chart
-{
-  "type": "bar",
-  "title": "Requests per day",
-  "description": "Monday 24; Tuesday 31; Wednesday 28.",
-  "x": "day",
-  "y": "requests",
-  "data": [
-    {"day": "Mon", "requests": 24},
-    {"day": "Tue", "requests": 31},
-    {"day": "Wed", "requests": 28}
-  ]
-}
+{"type":"bar","title":"Requests per day","description":"Monday 24; Tuesday 31; Wednesday 28.","x":"day","y":"requests","data":[{"day":"Mon","requests":24},{"day":"Tue","requests":31},{"day":"Wed","requests":28}]}
 ~~~
 
-For the queue model, stable arrival requires $\lambda < \mu$.
+A stable queue requires $\lambda < \mu$.
 
-~~~x-widget
-{
-  "type": "controls",
-  "title": "Try the arrival rate",
-  "description": "Move the slider to compare arrival with a capacity of 100.",
-  "inputs": [{"id": "rate", "label": "Requests per minute", "type": "range", "min": 0, "max": 180, "value": 80}],
-  "outputs": [{"id": "status", "label": "Queue", "expr": "rate <= 100 ? 'within capacity' : 'queue grows'"}]
-}
-~~~
-
-:::tip[Try an edit]
-Change a chart value in the editor, or move the rendered slider.
+:::tip[Try it]
+Change a chart value and render the document again.
 :::
 `;
 
-export default function ReportDemo() {
-  const [source, setSource] = useState(initialSource);
-  const [diagnostics, setDiagnostics] = useState([]);
-  const [error, setError] = useState(null);
-
-  return (
-    <section className="react-quickstart">
-      <label htmlFor="report-source">Edit the XMarkdown document</label>
-      <textarea id="report-source" rows={14} value={source}
-        onChange={event => setSource(event.target.value)} />
-
-      {error && <p role="alert">{error.message}</p>}
-      {diagnostics.map((item, index) => (
-        <p role="status" key={index}>Line {item.line}: {item.message}</p>
-      ))}
-
-      <XMarkdown source={source} className="xmarkdown react-native"
-        onDiagnostics={items => { setDiagnostics(items); setError(null); }}
-        onError={cause => { setError(cause); setDiagnostics([]); }} />
-    </section>
-  );
+export default function App() {
+  return <XMarkdown source={report} />;
 }
 ```
 
-The CSS import supplies the renderer's shared styles once for the app; each document contains only XMarkdown. `String.raw` preserves TeX backslashes, and standard tilde fences keep the JavaScript template literal readable.
+The stylesheet supplies the shared chart, diagram, and widget styles. It is loaded once for the app. You can override it with your own theme.
 
-</details>
+[Complete editable React example with a live slider and error handling](https://github.com/muhammadhaseebiqbal-dev/XMarkdown/blob/main/integration/react-quickstart.jsx) · [Node, browser, Next.js, and Vue recipes](https://github.com/muhammadhaseebiqbal-dev/XMarkdown/blob/main/docs/integrations.md)
 
-[Complete Node/browser/React/Next/Vue integration guide](docs/integrations.md). The GitHub package name is `xmarkdown`; plain `npm install xmarkdown` is not a verified registry installation path for this project.
+## What is supported?
 
-## Try it
-
-Explore [the dark showcase](https://xmarkdown-zeta.vercel.app): eighteen rendered examples, including layered architecture, capacity planning, rollback workflows, advanced equations, and a combined report, XMarkdown/HTML source views, token measurements, downloadable sources, a two-input control, and an editable playground using the native browser renderer.
-
-```sh
-git clone https://github.com/muhammadhaseebiqbal-dev/XMarkdown.git
-cd XMarkdown
-npm ci
-npm test
-npm run build
-npm run site
-```
-
-The showcase runs at <http://127.0.0.1:4320>. The original development playground is available with `npm run demo` at <http://127.0.0.1:4317>; `/extended` demonstrates all extensions and local SVG file import, and `/compare` shows the source comparison gallery.
-
-## What stays familiar, and what changes
-
-Headings, paragraphs, emphasis, lists, blockquotes, links, code fences, tables, and strikethrough keep their usual syntax. New constructs are opt-in directives, math delimiters, and named code fences. There is no wholesale syntax replacement.
-
-The rendering profile intentionally changes some inherited behaviors: author HTML is escaped, Markdown images show alt text without fetching resources, unsafe link schemes are blocked, automatic linkification is disabled, and nesting is bounded. This is not a claim of full CommonMark/GFM conformance. Task-list checkboxes and Mermaid rendering are not implemented.
-
-| Capability | Original Markdown / reused core | XMarkdown MVP addition | Current limit |
-| --- | --- | --- | --- |
-| Prose, lists, quotes, links, code | Preserved through markdown-it | Checked links; bounded profile | Raw HTML escaped; images show alt text |
-| Tables and strikethrough | markdown-it extensions | Retained | No cell spanning or custom table controls |
-| Callouts | Not in original Markdown | `:::note`, `:::tip`, `:::warning` | Known kinds; optional text title |
-| Charts | Code/source only | `x-chart` → SVG | Categorical bar/line, up to 256 rows |
-| Directed diagrams | Code/source only | `x-diagram` → SVG | Basic placement; 32 nodes, 128 edges |
-| Mathematics | Usually requires an adapter | `$…$`, display `$$`, `x-math` | Bounded TeX; native MathML via KaTeX |
-| Calculated controls | Usually requires HTML/JS | `x-widget` controls | Range/number/select/toggle; bounded expressions |
-| Drawing | Usually requires HTML/JS | `x-widget` draw | SVG strokes, undo/clear; 8,192 points |
-| Vector scenes | Usually embedded SVG/HTML | `x-svg` scene tuples | Paths, groups, gradients, clips, masks, symbols |
-| Existing SVG imports | Usually embedded raw markup | `x-svg` checked markup | Static subset; 512 nodes, depth 16 |
-| Streamed output | Common hosts reparse prefixes | Provisional sections + final parse | Final parse restores document-wide correctness |
-
-## Implementation and provenance matrix
-
-These processors are reused as dependencies; they were not rewritten or claimed as original XMarkdown processors.
-
-| Component | Origin | What XMarkdown implements |
+| Capability | Delivered | Example or limit |
 | --- | --- | --- |
-| Markdown blocks, inline syntax, tokenization | [markdown-it](https://github.com/markdown-it/markdown-it), 15.0.3 on main; 14.3.3 in v0.2.0 | Configuration, directives, math/fence dispatch, link/image policy |
-| TeX processing | [KaTeX 0.19.1](https://github.com/KaTeX/KaTeX), loaded on first use | Bounded inputs, trust disabled, MathML output and cache |
-| XML/SVG import tokenization | [saxes 6.0.0](https://github.com/lddubeau/saxes), loaded on first use | Element/attribute profile, references, bounds, scene validation |
-| Chart and graph geometry | Custom JavaScript | Schemas, basic layout, accessible labels, SVG templates |
-| Scene rendering | Custom JavaScript | Tuple schema, paths/references, validated SVG output |
-| Control expressions | Custom JavaScript | Bounded parser/interpreter; no `eval`, programs, property access |
-| Browser widgets | Custom JavaScript | Shared input updates, SVG drawing, undo/clear |
-| Streaming and cache | Custom JavaScript | Bounded provisional work, final parse, reuse, ID rewriting/eviction |
-| Token measurement | [js-tiktoken 1.0.21](https://github.com/dqbd/tiktoken) | Named encoding comparisons and checked-in reports |
-| Showcase | Custom static HTML/CSS/ESM + native browser parser | Pre-rendered examples, native edits, React integration, bounded HTTP bridge |
+| Familiar Markdown | Headings, emphasis, lists, quotes, links, code, tables, strikethrough | Uses markdown-it; HTML is escaped and images show alt text |
+| Callouts | Notes, tips, and warnings | `:::tip[Title]` |
+| Charts | Bar and line charts rendered as SVG | `x-chart`; up to 256 rows |
+| Diagrams | Directed graphs with automatic placement | `x-diagram`; 32 nodes, 128 edges |
+| Math | Inline and display equations | `$…$`, `$$`, or `x-math`; KaTeX to MathML |
+| Interactive controls | Sliders, numbers, selects, toggles, calculated outputs | `x-widget`; expressions run without `eval` |
+| Drawing | Sketch, undo, and clear | `x-widget` drawing canvas |
+| Complex SVG scenes | Paths, groups, gradients, clipping, masks, patterns, symbols | `x-svg` with structured scene data |
+| SVG imports | Existing static SVG inside an `x-svg` fence | Checked subset; external resources and scripts rejected |
+| Streaming | Partial previews followed by a complete final render | Bounded caching and section updates |
+| Integrations | Node, browser, React, and TypeScript exports | Native JavaScript implementation |
 
-## Accomplishment matrix
+This keeps the usual Markdown syntax and adds optional blocks. It does not replace Markdown with a new language. Task-list checkboxes, Mermaid rendering, external images, SVG animation/filters, and arbitrary author JavaScript are not implemented.
 
-| Area | Delivered in this MVP | Evidence | Remaining work |
+## What we built, and what we reused
+
+| Part | Reused processor | XMarkdown's contribution |
+| --- | --- | --- |
+| Markdown | [markdown-it](https://github.com/markdown-it/markdown-it) | Document rules, callouts, feature dispatch, checked links |
+| Equations | [KaTeX](https://github.com/KaTeX/KaTeX) | Input limits, lazy loading, MathML output, caching |
+| SVG imports | [saxes](https://github.com/lddubeau/saxes) | Allowed elements/attributes, local references, size limits |
+| Charts and diagrams | Custom JavaScript | Data checks, geometry, labels, SVG rendering |
+| Scenes and controls | Custom JavaScript | Scene format, SVG output, expression interpreter, widgets |
+| Streaming and cache | Custom JavaScript | Partial updates, final render, bounded reuse |
+
+There is one JavaScript implementation today. Other server languages can call a Node/HTTP service; independent Python, Go, or Rust ports are not shipped.
+
+## What this MVP has achieved
+
+| Area | Accomplished | Evidence | Next step |
 | --- | --- | --- | --- |
-| Syntax and API | Markdown + extension families | [API](docs/parser-architecture.md), [syntax](docs/extended-capabilities.md), tests | Stable normalized AST; conformance corpus |
-| Rich rendering | Charts, graphs, equations, controls, drawing, scenes/imports | [Extended example](examples/extended.md), live examples | Better graph routing; additional chart types |
-| Efficiency | Optional adapters/runtime; bounded cache; streamed sections | [Feature measurements](benchmark/features-report.md) | Worker package; real AI trials |
-| Source comparison | Twelve measured X/HTML examples, two tokenizers | [Report](comparison/report.md), [JSON](comparison/results.json) | Capability-matched model evaluations |
-| Validation | Input budgets, checked SVG/expressions/links; escaped fallback | [Tests](test), [security policy](SECURITY.md) | Fuzzing, independent review, isolation |
-| Developer experience | Local demos, hosted editor, downloadable snippets, docs | [Showcase](https://xmarkdown-zeta.vercel.app), [examples](examples) | npm registry release and framework app coverage |
-| Maintenance | CI, policies, templates, changelog | [.github](.github), [CONTRIBUTING](CONTRIBUTING.md) | Maintainer review and release cadence |
+| Rich documents | Charts, diagrams, math, controls, drawing, SVG scenes/imports | [18 live examples](https://xmarkdown-zeta.vercel.app/#examples) | Better graph routing and more chart types |
+| Shared renderer | Node/browser engine and React component | [Integration checks](https://github.com/muhammadhaseebiqbal-dev/XMarkdown/blob/main/test/integration.test.js) | Full framework applications and a browser worker |
+| Source efficiency | Complete XMarkdown/HTML comparisons with token counts | [12 measured pairs](https://github.com/muhammadhaseebiqbal-dev/XMarkdown/blob/main/comparison/report.md) | Real model generation and reader trials |
+| Validation | Checked SVG, links, and expressions; limits and diagnostics | [Tests](https://github.com/muhammadhaseebiqbal-dev/XMarkdown/tree/main/test) | Fuzzing and independent security review |
+| Maintenance | CI on Node 22/24, TypeScript declarations, policies, changelog | [CI](https://github.com/muhammadhaseebiqbal-dev/XMarkdown/actions) | Stable API and compatibility coverage |
 
-## Examples: easy to difficult
+## More examples
 
-Ordinary Markdown and a callout:
-
-````markdown
-# A release worth reading
-
-Keep the **idea** in the document.
-
-:::tip[Authoring]
-Describe the visual with data, then reuse the renderer.
-:::
-````
-
-A chart — geometry and axes are supplied by the renderer:
-
-````markdown
-```x-chart
-{"type":"bar","title":"Requests per day","description":"Monday 24; Tuesday 31.","x":"day","y":"requests","data":[{"day":"Mon","requests":24},{"day":"Tue","requests":31}]}
-```
-````
-
-A directed graph:
+A diagram:
 
 ````markdown
 ```x-diagram
@@ -190,25 +105,15 @@ A directed graph:
 ```
 ````
 
-Math and a calculated control:
-
-````markdown
-Energy: $E = mc^2$.
-
-```x-widget
-{"type":"controls","title":"Capacity check","description":"Move the slider to test capacity.","inputs":[{"id":"rate","label":"Requests per minute","type":"range","min":0,"max":180,"value":80}],"outputs":[{"id":"status","label":"Queue","expr":"rate <= 100 ? 'capacity is sufficient' : 'queue grows'"}]}
-```
-````
-
-Drawing uses a known widget rather than an author program:
+A calculated control:
 
 ````markdown
 ```x-widget
-{"type":"draw","title":"Sketch an idea","description":"Drag to draw. Undo and clear are available.","width":640,"height":320,"color":"#2563eb","lineWidth":3}
+{"type":"controls","title":"Capacity check","description":"Move the slider to test capacity.","inputs":[{"id":"rate","label":"Requests per minute","type":"range","min":0,"max":180,"value":80}],"outputs":[{"id":"status","label":"Queue","expr":"rate <= 100 ? 'within capacity' : 'queue grows'"}]}
 ```
 ````
 
-A compact vector scene uses `[tag, attributes, ...children]` tuples:
+A vector path:
 
 ````markdown
 ```x-svg
@@ -216,110 +121,28 @@ A compact vector scene uses `[tag, attributes, ...children]` tuples:
 ```
 ````
 
-Existing SVG is also accepted **inside an `x-svg` fence**, checked against the static import profile. See [the artwork](examples/artwork.svg), [complex scene and import](examples/extended.md), and [all twelve XMarkdown/HTML pairs](comparison/samples.md).
+For larger examples, try the [architecture diagram, capacity model, rollback workflow, equations, and combined report](https://xmarkdown-zeta.vercel.app/#examples). [Full syntax and SVG import examples](https://github.com/muhammadhaseebiqbal-dev/XMarkdown/blob/main/docs/extended-capabilities.md).
 
-“Impossible” applications are not made universally expressible by this format. The MVP covers several previously unsupported document tasks through trusted widgets and vector scenes. Unrestricted UI design, author JavaScript, external assets, SVG animation/filters, and arbitrary application logic remain outside the profile.
+## Is it faster or smaller?
 
-## Parser API and browser integration
+XMarkdown uses markdown-it for ordinary Markdown. Added features have processing costs; there is **no universal 50× parsing improvement**.
 
-```js
-import { createParser } from './src/index.js';
-
-const parser = createParser();
-const result = parser.parse('# Hello\n\nCompact **Markdown**.');
-console.log(result.html, result.diagnostics, result.assets);
-
-const stream = parser.stream();
-for (const chunk of chunksFromYourModel) {
-  const { updates } = stream.write(chunk);
-  // Apply update.html as provisional sections in your UI.
-}
-const { document, stats } = stream.finish();
-// Replace provisional content with document.html once at completion.
-```
-
-Results include source, markdown-it tokens, diagnostics, HTML, environment, and asset requirements. Widgets appear in `result.assets.modules` only when needed. Disable caching with `cacheEntries: 0`, inspect `parser.cacheStats()`, or call `parser.clearCache()`.
-
-For integrations installing the source package locally, exports are `xmarkdown` and `xmarkdown/widgets`. Mount shared widget code only in parser-generated markup:
-
-```js
-if (result.assets.modules.includes('widgets')) {
-  const { mountWidgets } = await import('xmarkdown/widgets');
-  mountWidgets(documentContainer);
-}
-```
-
-The showcase pre-renders fixtures with the Node entry and uses the same parser locally through `xmarkdown/browser` for edits. The browser wrapper prepares optional processors asynchronously, then runs the same core. A separate `/api/render` bridge remains available for non-JavaScript hosts. Preview frames allow trusted widget scripts and omit `allow-same-origin`; author source is not executed as code. The endpoint caps source at 32,768 code units and does not log/persist documents in application code. Hosting providers may retain ordinary access metadata.
-
-## Performance: what was actually measured
-
-These checked-in measurements describe the v0.2.0 implementation using markdown-it 14.3.3. Main now uses 15.0.3 after a tested dependency upgrade; these are not new benchmarks for that version.
-
-There is **no universal 50× batch-parsing improvement**. XMarkdown delegates normal parsing to markdown-it and adds validation/rendering work. Some batch workloads are slower. Streaming gains come from avoiding repeated full-prefix parsing.
-
-| Measurement | Observed local result | Interpretation |
-| --- | ---: | --- |
-| Original demo source | 839 UTF-8 bytes / 208 o200k_base tokens | Same fixture as the original demo |
-| Compact HTML/SVG | 3,492 bytes / 1,219 tokens | X source uses 82.9% fewer tokens |
-| Shared-component HTML | 1,044 bytes / 261 tokens | X source uses 20.3% fewer tokens |
-| Raw SVG import example | 225 X tokens / 219 HTML tokens | Fence overhead adds 2.7% |
-| Plain full render, 6,320-character source | markdown-it 0.259 ms; X 0.268 ms | X adds overhead |
-| Extended empty-cache parse + render | 0.652 ms | Dependencies already loaded |
-| Extended cache disabled / cached render | 0.508 ms / 0.075 ms | Cache overhead versus exact reuse |
-| Extended streamed render vs repeated prefixes | 5.48× | Synthetic local streaming workload |
-| Long-prose streamed parse vs repeated prefixes | 64.20× | Separate parse-only workload; rendering excluded |
-
-These are local measurements, not service-level promises. First-use math/XML dependencies add latency. Browser layout/painting, model generation, billing, repair rates, and reader studies are unmeasured. Named local encodings are not current Claude usage. The format guide adds 383 o200k_base tokens when supplied and is excluded from output-fragment savings; shared runtime code is excluded on both sides.
-
-```sh
-npm run bench
-npm run bench:features
-npm run compare
-```
-
-[Parser benchmark](benchmark/report.md) · [Feature benchmark](benchmark/features-report.md) · [Token comparison](comparison/report.md) · [Evaluation plan](docs/evaluation-plan.md)
-
-## Security and resource profile
-
-SVG scripts, event attributes, `foreignObject`, external resources, CSS stylesheets/classes, DTDs, animation, and filters are rejected. References stay local and validated. Mathematical trust is disabled. Widget expressions cannot run programs or access properties. Invalid graphic content produces diagnostics and an escaped-source fallback.
-
-Limits bound source/graphic sizes, nodes/depth/expansion, tokens, output, expressions, and drawing points. These are **not hard CPU/memory isolation**; hostile-input applications need their own isolation, resource/time, and network policies. No independent audit has been completed. See [SECURITY.md](SECURITY.md) and [exact limits](docs/extended-capabilities.md).
-
-## Repository structure
-
-```text
-src/           Parser, validators, renderers, streaming/cache, browser widgets
-test/          Parser and extension regressions
-examples/      Source documents and SVG artwork
-demo/          Original playground and shared fixtures
-comparison/    Complete X/HTML sources, token counts and gallery
-benchmark/     Reproducible workloads and reports
-website/       Static showcase builder, browser UI and local server
-api/           Bounded hosted playground endpoint
-docs/          Architecture, syntax, research, status and compatibility
-.github/       CI, dependency updates and issue/PR templates
-```
-
-## Development and deployment
-
-| Command | Purpose |
+| Measured example | Result |
 | --- | --- |
-| `npm test` | Parser, validation, cache and streaming regressions |
-| `npm run build` | Build showcase, examples and documentation into `dist/` |
-| `npm run check:site` | Verify examples/downloads and local links |
-| `npm run site` | Serve showcase and rendering API locally |
-| `npm run demo` | Original authoring/import/comparison playground |
-| `npm run compare` | Regenerate representation reports |
-| `npm run bench` / `npm run bench:features` | Regenerate workload measurements |
+| Original demo source vs literal HTML/SVG | 208 vs 1,219 tokens: 82.9% fewer source tokens |
+| Same source vs shared-component HTML | 208 vs 261 tokens: 20.3% fewer |
+| Existing raw SVG import | Fence overhead uses 2.7% more tokens |
+| Plain full-document render | XMarkdown 0.268 ms; bare markdown-it 0.259 ms |
+| Extended streaming vs repeatedly parsing full prefixes | 5.48× in a synthetic local workload |
 
-CI covers Node.js 22 and 24, native browser/Node parity, React server markup, package exports, and strict TypeScript imports. Vercel settings are committed in `vercel.json`; deploy with `vercel --prod` in an authenticated existing scope. Do not commit `.vercel/`, environment files, credentials, or private documents. See [deployment guide](docs/deployment.md).
+These are v0.2.0 fixture measurements using markdown-it 14.3.3 and the named `o200k_base` tokenizer. Version 0.2.1 uses markdown-it 15.0.3. Counts exclude shared runtime and author instructions. AI generation latency, billed usage, browser painting, and reader benefits have not been measured.
 
-## Roadmap and maintenance
+[Token comparisons](https://github.com/muhammadhaseebiqbal-dev/XMarkdown/blob/main/comparison/report.md) · [Benchmarks](https://github.com/muhammadhaseebiqbal-dev/XMarkdown/blob/main/benchmark/features-report.md) · [Evaluation plan](https://github.com/muhammadhaseebiqbal-dev/XMarkdown/blob/main/docs/evaluation-plan.md)
 
-Next priorities: conformance/fuzzing, a stable versioned document model, a cancellable worker distribution, better graph routing and accessible data tables, then capability-matched AI and reader evaluations. Mermaid, task lists, controlled images, and more chart types need explicit decisions and evidence. See [status and roadmap](docs/status.md).
+## Contribute
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting changes. Report vulnerabilities privately through [SECURITY.md](SECURITY.md). User-visible changes go in [CHANGELOG.md](CHANGELOG.md). Source is licensed under [MIT](LICENSE); dependency licenses remain with their authors.
+[Report an issue](https://github.com/muhammadhaseebiqbal-dev/XMarkdown/issues) · [Contributing](https://github.com/muhammadhaseebiqbal-dev/XMarkdown/blob/main/CONTRIBUTING.md) · [Roadmap](https://github.com/muhammadhaseebiqbal-dev/XMarkdown/blob/main/docs/status.md) · [Changelog](https://github.com/muhammadhaseebiqbal-dev/XMarkdown/blob/main/CHANGELOG.md)
 
-## Ground reality
+For applications handling hostile input, follow the [security guide](https://github.com/muhammadhaseebiqbal-dev/XMarkdown/blob/main/SECURITY.md). Input validation is implemented; an independent security audit and hard resource isolation are still future work.
 
-Markdown readability depends on theme and host. HTML enables arbitrary layouts and interactions but requires more author markup for some visuals and a broader validation boundary. MyST, Markdoc, MDX, Mermaid, Vega-Lite, and unified explore parts of this space. This MVP tests a bounded declarative document profile. See [prior art and sources](docs/ground-reality.md).
+MIT licensed.

@@ -4,37 +4,39 @@ The showcase uses **our native renderer**. Its static fixtures are built by `cre
 
 ## Install today
 
-The source package is ready to install from GitHub. It has not been published to the npm registry; do not assume `npm install xmarkdown` resolves this project.
+The npm package is named **`xmarkdown-renderer`**. The name `xmarkdown-renderer` belongs to another publisher.
 
 ```sh
-npm install github:muhammadhaseebiqbal-dev/XMarkdown#v0.2.0
+npm install xmarkdown-renderer
 ```
 
-The installation command pins the MVP release tag. Pin a commit hash when you need an immutable source revision. A repository clone can also produce a distributable archive with `npm pack`; install the resulting `.tgz`. Package files include source, declarations, shared CSS, license, README, and changelog, with no showcase/dev dependencies in the runtime payload.
+Pin `xmarkdown-renderer@0.2.1` when you need this exact MVP version. Package files include source, declarations, shared CSS, license, README, and changelog, with no showcase/dev dependencies in the runtime payload.
 
 Node.js 22+ is supported. Core dependencies are installed automatically. React is an optional peer: non-React consumers do not need it. TypeScript declarations are included.
+
+For an existing React 18+ application, this is the only package installation command needed. Import the component and shared CSS, then pass XMarkdown source as shown below. Your application bundles the renderer and uses its usual hosting workflow. The [showcase deployment guide](deployment.md) covers hosting this repository's demo and optional HTTP bridge; it is separate from integrating the library.
 
 ## Entry points
 
 | Export | Environment | API |
 | --- | --- | --- |
-| `xmarkdown` | Node | Synchronous `createParser().parse(source)` and streaming |
-| `xmarkdown/browser` | Browser bundler | Asynchronous `await parser.parse(source)`; shared core |
-| `xmarkdown/react` | React 18+ | `<XMarkdown source={source} />` or a parsed `document` |
-| `xmarkdown/widgets` | Browser | `mountWidgets(container)` for parsed markup |
-| `xmarkdown/frame` | Browser/Node | Trusted CSP document wrapper for isolated previews |
-| `xmarkdown/styles.css` | CSS bundler | Shared base graphic/widget styles; host may override |
+| `xmarkdown-renderer` | Node | Synchronous `createParser().parse(source)` and streaming |
+| `xmarkdown-renderer/browser` | Browser bundler | Asynchronous `await parser.parse(source)`; shared core |
+| `xmarkdown-renderer/react` | React 18+ | `<XMarkdown source={source} />` or a parsed `document` |
+| `xmarkdown-renderer/widgets` | Browser | `mountWidgets(container)` for parsed markup |
+| `xmarkdown-renderer/frame` | Browser/Node | Trusted CSP document wrapper for isolated previews |
+| `xmarkdown-renderer/styles.css` | CSS bundler | Shared base graphic/widget styles; host may override |
 
 ## React and Vite
 
 ```sh
-npm install github:muhammadhaseebiqbal-dev/XMarkdown#v0.2.0
+npm install xmarkdown-renderer
 ```
 
 ```jsx
 import React, { useState } from 'react';
-import { XMarkdown } from 'xmarkdown/react';
-import 'xmarkdown/styles.css';
+import { XMarkdown } from 'xmarkdown-renderer/react';
+import 'xmarkdown-renderer/styles.css';
 
 export const initialSource = String.raw`# Team capacity report
 
@@ -102,7 +104,7 @@ Source parsing starts in an effect on the client. Optional math/XML modules are 
 
 ### Why the CSS import exists
 
-Import `xmarkdown/styles.css` once at your application entry, or once in this component module. It supplies shared chart, diagram, callout, table, and widget styles. These rules belong to the installed renderer; document authors do not include CSS in each XMarkdown document. This is the same kind of setup used by other styled React libraries.
+Import `xmarkdown-renderer/styles.css` once at your application entry, or once in this component module. It supplies shared chart, diagram, callout, table, and widget styles. These rules belong to the installed renderer; document authors do not include CSS in each XMarkdown document. This is the same kind of setup used by other styled React libraries.
 
 The renderer emits semantic HTML/SVG/MathML without the stylesheet too, but the presentation is incomplete. A host that supplies equivalent styles may omit the default file. Automatic CSS injection is not used, keeping stylesheet loading explicit for server rendering, content security policies, and host themes. The current showcase bundles the shared stylesheet at about 0.75 kB gzip; the browser parser and optional processors are much larger costs. The site theme and React demo are separate assets.
 
@@ -112,9 +114,9 @@ Parse once on the server and pass the serializable result to the client componen
 
 ```jsx
 // app/report/page.jsx — server component
-import { createParser } from 'xmarkdown';
-import { XMarkdown } from 'xmarkdown/react';
-import 'xmarkdown/styles.css';
+import { createParser } from 'xmarkdown-renderer';
+import { XMarkdown } from 'xmarkdown-renderer/react';
+import 'xmarkdown-renderer/styles.css';
 
 export default function Page() {
   const document = createParser().parse('# Report\n\n$E = mc^2$');
@@ -129,9 +131,9 @@ This renders initial HTML on the server. The client only mounts widgets when req
 ```vue
 <script setup>
 import { ref, watch, nextTick } from 'vue';
-import { createParser } from 'xmarkdown/browser';
-import { mountWidgets } from 'xmarkdown/widgets';
-import 'xmarkdown/styles.css';
+import { createParser } from 'xmarkdown-renderer/browser';
+import { mountWidgets } from 'xmarkdown-renderer/widgets';
+import 'xmarkdown-renderer/styles.css';
 
 const props = defineProps({ source: String });
 const html = ref('');
@@ -155,14 +157,14 @@ Add application error/diagnostic handling. `v-html` must receive renderer output
 
 ## Svelte and other browser frameworks
 
-Use `xmarkdown/browser` to parse, render the returned HTML into a container owned by the framework, then call `mountWidgets` after its DOM update. Svelte's `{@html result.html}` and Vue's `v-html` have the same trust requirement: only parser-generated output. Angular's normal HTML sanitizer may remove SVG/MathML or widget attributes; an isolated preview frame avoids framework markup rewriting and preserves the renderer profile. A dedicated Angular adapter is not shipped.
+Use `xmarkdown-renderer/browser` to parse, render the returned HTML into a container owned by the framework, then call `mountWidgets` after its DOM update. Svelte's `{@html result.html}` and Vue's `v-html` have the same trust requirement: only parser-generated output. Angular's normal HTML sanitizer may remove SVG/MathML or widget attributes; an isolated preview frame avoids framework markup rewriting and preserves the renderer profile. A dedicated Angular adapter is not shipped.
 
 For plain JavaScript:
 
 ```js
-import { createParser } from 'xmarkdown/browser';
-import { mountWidgets } from 'xmarkdown/widgets';
-import 'xmarkdown/styles.css';
+import { createParser } from 'xmarkdown-renderer/browser';
+import { mountWidgets } from 'xmarkdown-renderer/widgets';
+import 'xmarkdown-renderer/styles.css';
 
 const parser = createParser();
 const result = await parser.parse(source);
@@ -175,7 +177,7 @@ if (result.assets.modules.includes('widgets')) mountWidgets(container);
 Browser imports assume a bundler that resolves npm packages. The showcase uses esbuild ESM splitting; Vite/Webpack/Next can resolve these entry points too. This MVP does not ship a standalone CDN/global bundle. Browser parsing is asynchronous only for processor preparation; core work runs on the main thread. A cancellable worker distribution remains planned.
 
 ```js
-const parser = createParser(); // imported from xmarkdown/browser
+const parser = createParser(); // imported from xmarkdown-renderer/browser
 const stream = await parser.stream(); // prepares math/XML once for unknown future input
 const { updates } = stream.write(chunk);
 const { document } = stream.finish();

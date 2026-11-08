@@ -2,11 +2,16 @@
 
 ## Unreleased
 
+Worker distribution, conformance/fuzzing, and model/reader evaluations remain planned.
+
+## 0.2.1 — 2026-11-08
+
+- Prepared the first npm release as `xmarkdown-renderer`; `xmarkdown` is owned by another publisher. Package imports now use `xmarkdown-renderer` and its `/react`, `/browser`, `/widgets`, `/frame`, and `/styles.css` entries. The v0.2.0 GitHub release keeps its original name and imports.
+- Simplified the README around installation, real React source, capability/provenance/accomplishment matrices, examples, and measured tradeoffs. Showcase deployment instructions live in maintainer documentation.
+- Published the Show HN submission and recorded its discussion URL in the launch notes.
 - Reviewed and merged dependency updates to markdown-it 15.0.3, actions/checkout v7, and actions/setup-node v7; parser/browser/React regressions pass. The v0.2.0 tag keeps its original dependencies and benchmark baseline.
 - Complete editable React report example with real chart/math/control syntax, diagnostic handling, a download, and shared CSS guidance.
 - Published showcase at https://xmarkdown-zeta.vercel.app; added full-example links, deployment asset revalidation, and dark-theme callout contrast.
-
-Worker distribution, conformance/fuzzing, and model/reader evaluations remain planned.
 
 ## 0.2.0 — 2026-11-08
 

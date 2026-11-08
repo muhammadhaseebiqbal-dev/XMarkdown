@@ -1,12 +1,12 @@
-# Show HN draft
+# Show HN launch
 
-Status on 8 November 2026: account creation completed, but submission was blocked by Hacker News' temporary Show HN restriction for accounts unfamiliar with the community. No post was published. The [restriction notice](https://news.ycombinator.com/showlim) gives no fixed waiting period or karma threshold. The draft below is retained for a future eligible submission.
+Published on 8 November 2026: [Show HN: XMarkdown – Markdown with charts, controls and validated SVG](https://news.ycombinator.com/item?id=50414185). Hacker News accepted the submission on retry after an earlier temporary account restriction.
 
 Title: Show HN: XMarkdown – Markdown with charts, controls and validated SVG
 
 URL: https://xmarkdown-zeta.vercel.app
 
-## Introductory comment
+## Introductory comment draft (not posted)
 
 We built XMarkdown to explore a small document format for AI-generated reports that need more than prose: charts, directed diagrams, equations, calculated controls, drawing, and static SVG scenes/imports.
 

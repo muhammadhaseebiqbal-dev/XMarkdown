@@ -1,10 +1,15 @@
 {
-  "name": "xmarkdown",
-  "version": "0.2.0",
+  "name": "xmarkdown-renderer",
+  "version": "0.2.1",
   "private": false,
   "type": "module",
   "description": "Markdown for rich AI documents: declarative charts, diagrams, math, widgets, validated SVG, and bounded streaming previews.",
   "license": "MIT",
+  "homepage": "https://xmarkdown-zeta.vercel.app",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
   "engines": {
     "node": ">=22"
   },

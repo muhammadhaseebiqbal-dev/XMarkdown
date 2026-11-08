@@ -63,7 +63,7 @@ const result = parser.parse(source);
 // result.assets.modules is ['widgets'] only if widgets occur.
 // Insert result.html using the host's trusted rendering boundary.
 if (result.assets.modules.includes('widgets')) {
-  const { mountWidgets } = await import('xmarkdown/widgets');
+  const { mountWidgets } = await import('xmarkdown-renderer/widgets');
   mountWidgets(documentContainer);
 }
 ```

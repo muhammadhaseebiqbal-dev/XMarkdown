@@ -5,7 +5,7 @@ Status checked on **8 November 2026**, prototype version **0.2.0**. The extended
 
 ## Implemented
 
-- Ordinary Markdown through patched markdown-it 14.3.3, including tables and strikethrough. The core syntax has not been replaced.
+- Ordinary Markdown through configured markdown-it, including tables and strikethrough. Main uses 15.0.3; the v0.2.0 release and checked-in benchmark baseline use 14.3.3. The core syntax has not been replaced.
 - `:::note`, `:::tip`, and `:::warning` callouts containing Markdown.
 - Closed `x-chart` fences with validated JSON for categorical bar and line charts.
 - Closed `x-diagram` fences with validated JSON for basic directed graphs, automatic placement, and SVG output.

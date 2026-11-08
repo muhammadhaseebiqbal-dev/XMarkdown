@@ -1,6 +1,6 @@
 # XMarkdown
 
-**Markdown for richer AI documents.** Familiar prose syntax with declarative charts, diagrams, mathematics, interactive controls, drawing, and validated SVG scenes/imports.
+**Markdown for reports that need charts, math, controls, and SVG.** Write familiar prose and structured visual data; use one shared renderer in Node, the browser, or React.
 
 [![CI](https://github.com/muhammadhaseebiqbal-dev/XMarkdown/actions/workflows/ci.yml/badge.svg)](https://github.com/muhammadhaseebiqbal-dev/XMarkdown/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-d8ee91)](LICENSE)
@@ -9,6 +9,8 @@
 [**Live showcase & playground →**](https://xmarkdown-zeta.vercel.app) · [Syntax reference](docs/extended-capabilities.md) · [Architecture](docs/parser-architecture.md) · [All examples](comparison/samples.md) · [Roadmap](docs/status.md)
 
 XMarkdown lets an author describe content and visual meaning while a shared renderer supplies layout, geometry, styles, and supported interactions. HTML, SVG, and MathML remain rendering targets. The Markdown core is **markdown-it**, with custom extensions; this repository does not introduce a replacement CommonMark parser.
+
+Use it for generated reports, technical explanations, and documents with supported interactive graphics. For plain prose, standard Markdown is simpler. Existing Markdown plugin stacks may already meet your needs; XMarkdown's value is one consistent document profile and renderer. [Compare the tradeoffs](docs/ground-reality.md).
 
 **Release status:** First public integration MVP, version 0.2.0. The synchronous Node API runs on Node.js 22+. The async browser entry and React component share its native core. The package is **installable from GitHub**, with TypeScript declarations, but is **not published to npm**. APIs and schemas may change before 1.0. See [compatibility policy](docs/compatibility.md).
 
@@ -135,7 +137,7 @@ These processors are reused as dependencies; they were not rewritten or claimed 
 
 | Component | Origin | What XMarkdown implements |
 | --- | --- | --- |
-| Markdown blocks, inline syntax, tokenization | [markdown-it 14.3.3](https://github.com/markdown-it/markdown-it) | Configuration, directives, math/fence dispatch, link/image policy |
+| Markdown blocks, inline syntax, tokenization | [markdown-it](https://github.com/markdown-it/markdown-it), 15.0.3 on main; 14.3.3 in v0.2.0 | Configuration, directives, math/fence dispatch, link/image policy |
 | TeX processing | [KaTeX 0.19.1](https://github.com/KaTeX/KaTeX), loaded on first use | Bounded inputs, trust disabled, MathML output and cache |
 | XML/SVG import tokenization | [saxes 6.0.0](https://github.com/lddubeau/saxes), loaded on first use | Element/attribute profile, references, bounds, scene validation |
 | Chart and graph geometry | Custom JavaScript | Schemas, basic layout, accessible labels, SVG templates |
@@ -250,6 +252,8 @@ if (result.assets.modules.includes('widgets')) {
 The showcase pre-renders fixtures with the Node entry and uses the same parser locally through `xmarkdown/browser` for edits. The browser wrapper prepares optional processors asynchronously, then runs the same core. A separate `/api/render` bridge remains available for non-JavaScript hosts. Preview frames allow trusted widget scripts and omit `allow-same-origin`; author source is not executed as code. The endpoint caps source at 32,768 code units and does not log/persist documents in application code. Hosting providers may retain ordinary access metadata.
 
 ## Performance: what was actually measured
+
+These checked-in measurements describe the v0.2.0 implementation using markdown-it 14.3.3. Main now uses 15.0.3 after a tested dependency upgrade; these are not new benchmarks for that version.
 
 There is **no universal 50× batch-parsing improvement**. XMarkdown delegates normal parsing to markdown-it and adds validation/rendering work. Some batch workloads are slower. Streaming gains come from avoiding repeated full-prefix parsing.
 

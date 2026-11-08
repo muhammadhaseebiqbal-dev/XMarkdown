@@ -1,5 +1,7 @@
 # Show HN draft
 
+Status on 8 November 2026: account creation completed, but submission was blocked by Hacker News' temporary Show HN restriction for accounts unfamiliar with the community. No post was published. The [restriction notice](https://news.ycombinator.com/showlim) gives no fixed waiting period or karma threshold. The draft below is retained for a future eligible submission.
+
 Title: Show HN: XMarkdown – Markdown with charts, controls and validated SVG
 
 URL: https://xmarkdown-zeta.vercel.app

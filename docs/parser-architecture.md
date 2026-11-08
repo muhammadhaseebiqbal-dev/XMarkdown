@@ -9,6 +9,8 @@ For streaming AI documents, the largest avoidable cost is parsing the entire gro
 
 This is a workflow optimization. It does not make the underlying single-document Markdown parser 50× faster. There is no single “original Markdown parser”; the rebuilt benchmark names **markdown-it 14.3.3** as its baseline and also compares incremental XMarkdown with repeated full-prefix XMarkdown parsing.
 
+Main has since upgraded to markdown-it 15.0.3 with passing regressions; the published performance reports remain measurements of the v0.2.0 baseline.
+
 The implementation uses JavaScript and a mature Markdown front end. Version 0.2 adds Node lazy adapters for KaTeX and SAX SVG imports; a browser entry now prepares optional adapters asynchronously; a cancellable worker remains planned. A native or WASM implementation is a later profiling decision: encoding text, crossing the interface, and materializing a document tree also cost time. A 50× claim cannot be inferred from a language choice.
 
 ## Processing stages
